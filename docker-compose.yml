@@ -1,0 +1,62 @@
+services:
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: federation_api
+  #   ports:
+  #     - "${PORT:-3000}:3000"
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - NODE_ENV=development
+  #     - MONGO_URI=mongodb://mongo:27017/federation
+  #   volumes:
+  #     - ./uploads:/app/uploads
+  #   depends_on:
+  #     mongo:
+  #       condition: service_healthy
+  #   restart: unless-stopped
+  #   networks:
+  #     - federation_net
+
+  mongo:
+    image: mongo:7.0
+    container_name: federation_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - federation_net
+
+  mongo-express:
+    image: mongo-express:1.0.2
+    container_name: federation_mongo_express
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin123
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - federation_net
+
+volumes:
+  mongo_data:
+
+networks:
+  federation_net:
+    driver: bridge
