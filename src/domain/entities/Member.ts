@@ -1,8 +1,8 @@
 import {
-  Discipline,
   Gender,
-  MemberLevel,
   MemberStatus,
+  MemberCategory,
+  computeCategory,
 } from "../value-objects";
 import { MemberSuspendedError, MemberExpiredError } from "../errors";
 
@@ -16,8 +16,9 @@ export interface MemberProps {
   email: string;
   phone?: string;
   photoUrl?: string;
-  disciplines: Discipline[];
-  level: MemberLevel;
+  height?: number; // cm
+  armSpan?: number; // cm
+  weight?: number; // kg
   status: MemberStatus;
   clubId?: string;
   season: number;
@@ -36,8 +37,9 @@ export class Member {
   readonly email: string;
   readonly phone?: string;
   readonly photoUrl?: string;
-  readonly disciplines: Discipline[];
-  readonly level: MemberLevel;
+  readonly height?: number;
+  readonly armSpan?: number;
+  readonly weight?: number;
   readonly status: MemberStatus;
   readonly clubId?: string;
   readonly season: number;
@@ -55,8 +57,9 @@ export class Member {
     this.email = props.email;
     this.phone = props.phone;
     this.photoUrl = props.photoUrl;
-    this.disciplines = props.disciplines;
-    this.level = props.level;
+    this.height = props.height;
+    this.armSpan = props.armSpan;
+    this.weight = props.weight;
     this.status = props.status;
     this.clubId = props.clubId;
     this.season = props.season;
@@ -65,16 +68,21 @@ export class Member {
     this.updatedAt = props.updatedAt;
   }
 
-  // ─── Computed ───────────────────────────────────────────────────────────────
+  // ─── Computed ────────────────────────────────────────────────────────────────
   get fullName(): string {
     return `${this.firstName} ${this.lastName}`;
+  }
+
+  // Category is always computed from DOB, never stored
+  getCategory(referenceDate?: Date): MemberCategory {
+    return computeCategory(this.dateOfBirth, referenceDate);
   }
 
   isActive(): boolean {
     return this.status === MemberStatus.ACTIVE;
   }
 
-  // ─── Guard — call before any verification ───────────────────────────────────
+  // ─── Guard ───────────────────────────────────────────────────────────────────
   assertVerifiable(): void {
     if (this.status === MemberStatus.SUSPENDED) {
       throw new MemberSuspendedError(this.licenseNumber);
@@ -84,7 +92,7 @@ export class Member {
     }
   }
 
-  // ─── Immutable updates ──────────────────────────────────────────────────────
+  // ─── Immutable updates ───────────────────────────────────────────────────────
   withStatus(status: MemberStatus): Member {
     return new Member({ ...this.toProps(), status });
   }
@@ -97,7 +105,7 @@ export class Member {
     return new Member({ ...this.toProps(), qrToken });
   }
 
-  // ─── Serialisation ──────────────────────────────────────────────────────────
+  // ─── Serialisation ───────────────────────────────────────────────────────────
   toProps(): MemberProps {
     return {
       id: this.id,
@@ -109,8 +117,9 @@ export class Member {
       email: this.email,
       phone: this.phone,
       photoUrl: this.photoUrl,
-      disciplines: this.disciplines,
-      level: this.level,
+      height: this.height,
+      armSpan: this.armSpan,
+      weight: this.weight,
       status: this.status,
       clubId: this.clubId,
       season: this.season,

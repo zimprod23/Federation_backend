@@ -26,7 +26,6 @@ export function cardRouter(
   memberRepo: IMemberRepository,
   cardRepo: ICardRepository,
   storageService: IStorageService,
-  cardRenderer: ICardRenderer,
   tokenSigner: ITokenSigner,
   authTokenSvc: IAuthTokenService,
 ): Router {
@@ -45,8 +44,7 @@ export function cardRouter(
         const uc = new GenerateCardUseCase(
           memberRepo,
           cardRepo,
-          storageService,
-          cardRenderer,
+          // storageService,
           tokenSigner,
         );
         const result = await uc.execute({

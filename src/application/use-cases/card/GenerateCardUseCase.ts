@@ -3,8 +3,6 @@ import QRCode from "qrcode";
 import {
   IMemberRepository,
   ICardRepository,
-  IStorageService,
-  ICardRenderer,
   ITokenSigner,
 } from "../../../domain/interfaces";
 import { MembershipCard } from "../../../domain/entities/MembershipCard";
@@ -24,8 +22,6 @@ export class GenerateCardUseCase {
   constructor(
     private readonly memberRepo: IMemberRepository,
     private readonly cardRepo: ICardRepository,
-    private readonly storageService: IStorageService,
-    private readonly cardRenderer: ICardRenderer,
     private readonly tokenSigner: ITokenSigner,
   ) {}
 
@@ -47,32 +43,18 @@ export class GenerateCardUseCase {
       );
     }
 
+    // Invalidate any existing card for this season
     await this.cardRepo.invalidatePrevious(memberId, member.season);
 
+    // Sign QR payload
     const qrPayload = this.tokenSigner.sign({
       memberId: member.id!,
       licenseNumber: member.licenseNumber,
       season: member.season,
     });
 
-    const qrDataUrl = await QRCode.toDataURL(qrPayload, { width: 200 });
-    const pdfBuffer = await this.cardRenderer.render({
-      fullName: member.fullName,
-      licenseNumber: member.licenseNumber,
-      photoUrl: member.photoUrl,
-      disciplines: member.disciplines,
-      season: member.season,
-      qrDataUrl,
-      validFrom, // ← add
-      validUntil, // ← add
-    });
-
-    const pdfKey = `cards/${memberId}/${member.season}.pdf`;
-    const pdfUrl = await this.storageService.upload(
-      pdfKey,
-      pdfBuffer,
-      "application/pdf",
-    );
+    // Generate QR as base64 data URL for the frontend to embed in the card
+    const qrDataUrl = await QRCode.toDataURL(qrPayload, { width: 300 });
 
     const cardNumber = `CARD-${member.season}-${crypto
       .randomBytes(4)
@@ -84,8 +66,8 @@ export class GenerateCardUseCase {
       licenseNumber: member.licenseNumber,
       season: member.season,
       cardNumber,
-      pdfUrl,
       qrPayload,
+      qrDataUrl, // ← frontend uses this to render the QR
       isValid: true,
       validFrom,
       validUntil,

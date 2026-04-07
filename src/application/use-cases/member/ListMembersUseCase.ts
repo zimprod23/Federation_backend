@@ -15,7 +15,8 @@ export class ListMembersUseCase {
       { page, limit },
       {
         status: dto.status,
-        discipline: dto.discipline,
+        gender: dto.gender,
+        category: dto.category,
         clubId: dto.clubId,
         season: dto.season,
         search: dto.search,

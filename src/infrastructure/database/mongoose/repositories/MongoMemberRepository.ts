@@ -26,8 +26,11 @@ export class MongoMemberRepository implements IMemberRepository {
       email: doc.email,
       phone: doc.phone,
       photoUrl: doc.photoUrl,
-      disciplines: doc.disciplines as Discipline[],
-      level: doc.level as MemberLevel,
+      height: doc.height,
+      armSpan: doc.armSpan,
+      weight: doc.weight,
+      // disciplines: doc.disciplines as Discipline[],
+      // level: doc.level as MemberLevel,
       status: doc.status as MemberStatus,
       clubId: doc.clubId?.toString(),
       season: doc.season,
@@ -47,8 +50,11 @@ export class MongoMemberRepository implements IMemberRepository {
       email: member.email,
       phone: member.phone,
       photoUrl: member.photoUrl,
-      disciplines: member.disciplines,
-      level: member.level,
+      height: member.height,
+      armSpan: member.armSpan,
+      weight: member.weight,
+      // disciplines: member.disciplines,
+      // level: member.level,
       status: member.status,
       clubId: member.clubId as unknown as Schema.Types.ObjectId,
       season: member.season,
@@ -80,10 +86,13 @@ export class MongoMemberRepository implements IMemberRepository {
     const query: Record<string, unknown> = {};
 
     if (filters.status) query["status"] = filters.status;
-    if (filters.discipline) query["disciplines"] = filters.discipline;
+    if (filters.gender) query["gender"] = filters.gender;
     if (filters.clubId) query["clubId"] = filters.clubId;
     if (filters.season) query["season"] = filters.season;
     if (filters.search) query["$text"] = { $search: filters.search };
+
+    // category is computed from DOB — filter in memory after fetch
+    // for now we skip DB-level category filtering (add later with aggregation)
 
     const { page, limit } = pagination;
     const skip = (page - 1) * limit;

@@ -3,7 +3,7 @@ import { Club } from "../entities/Club";
 import { User } from "../entities/User";
 import { MembershipCard } from "../entities/MembershipCard";
 import { VerificationLog } from "../entities/VerificationLog";
-import { MemberStatus } from "../value-objects";
+import { Gender, MemberStatus } from "../value-objects";
 
 // ─── Shared ───────────────────────────────────────────────────────────────────
 export interface PaginationParams {
@@ -21,12 +21,12 @@ export interface PaginatedResult<T> {
 // ─── Filters ──────────────────────────────────────────────────────────────────
 export interface MemberFilters {
   status?: MemberStatus;
-  discipline?: string;
+  gender?: Gender;
+  category?: string;
   clubId?: string;
   season?: number;
   search?: string;
 }
-
 // ─── IMemberRepository ────────────────────────────────────────────────────────
 export interface IMemberRepository {
   findById(id: string): Promise<Member | null>;
@@ -84,11 +84,12 @@ export interface CardRenderInput {
   fullName: string;
   licenseNumber: string;
   photoUrl?: string;
-  disciplines: string[];
+  gender: string;
+  category: string;
   season: number;
   qrDataUrl: string;
-  validFrom?: Date; // ← add
-  validUntil?: Date; // ← add
+  validFrom?: Date;
+  validUntil?: Date;
 }
 
 export interface ICardRenderer {

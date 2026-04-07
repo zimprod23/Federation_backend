@@ -2,7 +2,7 @@
 @contentType = application/json
 
 # ── After login, paste the token here ────────────────────────────────────────
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQxMDMxM2I5OGM2M2VkNzgzOTI1NjgiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzUzMDU2NjEsImV4cCI6MTc3NTM5MjA2MX0.2PxPkNo2XmdF3uZguMfep8C2jmGx5Bl7RD0DVXVQHEM
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ0Y2U5MThlZTMwYjA0YTk3OWIwZGQiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzU1NTQxOTgsImV4cCI6MTc3NTY0MDU5OH0.kjQz68oegGUz4GvMfqdKSB_gGdvIME0yCiZiB2R_ZLE
 @qrToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6IjY5ZDEwNzkxMGNmOTM0ZGZhYmI0Y2M4YSIsImxpY2Vuc2VOdW1iZXIiOiJGRUQtMjAyNi0wMDAwNCIsInNlYXNvbiI6MjAyNiwiaWF0IjoxNzc1MzExNTQ3fQ.vITg3F73I0V1uWu8fZ6FPe7pP58fjT5166yVOLo1BIc
 ###
 
@@ -112,19 +112,20 @@ Authorization: Bearer {{token}}
 
 ### Create a member
 POST {{baseUrl}}/api/v1/members
-Content-Type: {{contentType}}
+Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "firstName": "Youssef",
-  "lastName": "Benali",
-  "dateOfBirth": "1995-06-15",
-  "gender": "male",
-  "email": "youssef.benali@gmail.com",
-  "phone": "+212600000002",
-  "disciplines": ["surfing"],
-  "level": "amateur",
-  "clubId": "69d10468ceca70105ca5c1ab"
+  "firstName":   "Youssef",
+  "lastName":    "Benali",
+  "dateOfBirth": "2004-03-10",
+  "gender":      "male",
+  "email":       "youssef.benali@gmail.com",
+  "phone":       "+212600000002",
+  "height":      180,
+  "armSpan":     178,
+  "weight":      70,
+  "clubId":      ""
 }
 
 ###

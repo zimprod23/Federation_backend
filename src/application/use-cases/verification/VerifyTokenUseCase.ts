@@ -35,7 +35,7 @@ export class VerifyTokenUseCase {
       return { result: "not_found" };
     }
 
-    // 4. Determine result — but always return member info
+    // 4. Determine result
     let result: VerificationResponseDTO["result"] = "valid";
 
     if (member.status === MemberStatus.SUSPENDED) {
@@ -43,7 +43,7 @@ export class VerifyTokenUseCase {
     } else if (member.status === MemberStatus.EXPIRED) {
       result = "expired";
     } else if (!card.isCurrentlyValid()) {
-      result = "expired"; // card window has passed
+      result = "expired";
     }
 
     return {
@@ -52,7 +52,8 @@ export class VerifyTokenUseCase {
         fullName: member.fullName,
         licenseNumber: member.licenseNumber,
         photoUrl: member.photoUrl,
-        disciplines: member.disciplines,
+        category: member.getCategory(),
+        gender: member.gender,
         status: member.status,
         season: member.season,
       },

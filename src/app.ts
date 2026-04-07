@@ -27,7 +27,6 @@ import { cardRouter } from "./presentation/http/routes/card.routes";
 import { verificationRouter } from "./presentation/http/routes/verification.routes";
 import { LocalStorageService } from "./infrastructure/security/LocalStorageService";
 import { MongoVerificationLogRepository } from "./infrastructure/database/mongoose/repositories/MongoVerificationLogRepository";
-import { CardRenderer } from "./infrastructure/pdf/CardRenderer";
 
 export async function createApp() {
   const cfg = getConfig();
@@ -57,8 +56,6 @@ export async function createApp() {
     //   :
     new LocalStorageService(cfg.LOCAL_UPLOAD_DIR, cfg.LOCAL_BASE_URL);
 
-  const cardRenderer = new CardRenderer();
-
   // ── Express ───────────────────────────────────────────────────────────────────
   const app = express();
 
@@ -82,14 +79,7 @@ export async function createApp() {
   app.use("/api/v1/clubs", clubRouter(clubRepo, authTokenSvc));
   app.use(
     "/api/v1/cards",
-    cardRouter(
-      memberRepo,
-      cardRepo,
-      storageService,
-      cardRenderer,
-      tokenSigner,
-      authTokenSvc,
-    ),
+    cardRouter(memberRepo, cardRepo, storageService, tokenSigner, authTokenSvc),
   );
   app.use(
     "/api/v1/verify",

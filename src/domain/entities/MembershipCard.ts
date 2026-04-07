@@ -9,6 +9,7 @@ export interface MembershipCardProps {
   isValid: boolean;
   validFrom: Date; // ← new
   validUntil: Date; // ← new
+  qrDataUrl?: string;
   generatedAt?: Date;
   downloadedAt?: Date;
   createdAt?: Date;
@@ -26,6 +27,7 @@ export class MembershipCard {
   readonly isValid: boolean;
   readonly validFrom: Date;
   readonly validUntil: Date;
+  readonly qrDataUrl?: string;
   readonly generatedAt?: Date;
   readonly downloadedAt?: Date;
   readonly createdAt?: Date;
@@ -42,6 +44,7 @@ export class MembershipCard {
     this.isValid = props.isValid;
     this.validFrom = props.validFrom;
     this.validUntil = props.validUntil;
+    this.qrDataUrl = props.qrDataUrl;
     this.generatedAt = props.generatedAt;
     this.downloadedAt = props.downloadedAt;
     this.createdAt = props.createdAt;

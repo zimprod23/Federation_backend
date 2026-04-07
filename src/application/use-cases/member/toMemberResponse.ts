@@ -11,8 +11,11 @@ export function toMemberResponse(member: Member): MemberResponseDTO {
     email: member.email,
     phone: member.phone,
     photoUrl: member.photoUrl,
-    disciplines: member.disciplines,
-    level: member.level,
+    height: member.height,
+    armSpan: member.armSpan,
+    weight: member.weight,
+    gender: member.gender,
+    category: member.getCategory(), // computed from DOB
     status: member.status,
     season: member.season,
     clubId: member.clubId,

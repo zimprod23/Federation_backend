@@ -19,6 +19,7 @@ import {
 } from "../../../application/use-cases/member";
 import {
   Discipline,
+  MemberCategory,
   MemberLevel,
   MemberStatus,
 } from "../../../domain/value-objects";
@@ -41,11 +42,12 @@ const createMemberSchema = z.object({
   firstName: z.string().min(1).max(100).trim(),
   lastName: z.string().min(1).max(100).trim(),
   dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD format"),
-  gender: z.enum(["male", "female", "other"]),
+  gender: z.enum(["male", "female"]),
   email: z.string().email(),
   phone: z.string().optional(),
-  disciplines: z.array(z.nativeEnum(Discipline)).min(1),
-  level: z.nativeEnum(MemberLevel),
+  height: z.number().min(100).max(250).optional(),
+  armSpan: z.number().min(100).max(250).optional(),
+  weight: z.number().min(30).max(200).optional(),
   clubId: z.string().optional(),
 });
 
@@ -54,8 +56,9 @@ const updateMemberSchema = z
     firstName: z.string().min(1).max(100).trim().optional(),
     lastName: z.string().min(1).max(100).trim().optional(),
     phone: z.string().optional(),
-    disciplines: z.array(z.nativeEnum(Discipline)).optional(),
-    level: z.nativeEnum(MemberLevel).optional(),
+    height: z.number().min(100).max(250).optional(),
+    armSpan: z.number().min(100).max(250).optional(),
+    weight: z.number().min(30).max(200).optional(),
     clubId: z.string().optional(),
     status: z.nativeEnum(MemberStatus).optional(),
   })
@@ -65,12 +68,12 @@ const listMembersSchema = z.object({
   page: z.coerce.number().min(1).default(1),
   limit: z.coerce.number().min(1).max(100).default(20),
   status: z.nativeEnum(MemberStatus).optional(),
-  discipline: z.nativeEnum(Discipline).optional(),
+  gender: z.enum(["male", "female"]).optional(),
+  category: z.nativeEnum(MemberCategory).optional(),
   clubId: z.string().optional(),
   season: z.coerce.number().optional(),
   search: z.string().optional(),
 });
-
 export function memberRouter(
   memberRepo: IMemberRepository,
   storageService: IStorageService,

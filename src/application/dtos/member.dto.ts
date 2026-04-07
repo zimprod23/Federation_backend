@@ -1,19 +1,19 @@
 import {
-  Discipline,
   Gender,
-  MemberLevel,
+  MemberCategory,
   MemberStatus,
 } from "../../domain/value-objects";
 
 export interface CreateMemberDTO {
   firstName: string;
   lastName: string;
-  dateOfBirth: string; // ISO string "YYYY-MM-DD" from HTTP
+  dateOfBirth: string; // ISO "YYYY-MM-DD"
   gender: Gender;
   email: string;
   phone?: string;
-  disciplines: Discipline[];
-  level: MemberLevel;
+  height?: number;
+  armSpan?: number;
+  weight?: number;
   clubId?: string;
 }
 
@@ -21,8 +21,9 @@ export interface UpdateMemberDTO {
   firstName?: string;
   lastName?: string;
   phone?: string;
-  disciplines?: Discipline[];
-  level?: MemberLevel;
+  height?: number;
+  armSpan?: number;
+  weight?: number;
   clubId?: string;
   status?: MemberStatus;
 }
@@ -31,7 +32,8 @@ export interface ListMembersDTO {
   page?: number;
   limit?: number;
   status?: MemberStatus;
-  discipline?: string;
+  gender?: Gender;
+  category?: MemberCategory;
   clubId?: string;
   season?: number;
   search?: string;
@@ -46,8 +48,11 @@ export interface MemberResponseDTO {
   email: string;
   phone?: string;
   photoUrl?: string;
-  disciplines: Discipline[];
-  level: MemberLevel;
+  height?: number;
+  armSpan?: number;
+  weight?: number;
+  gender: Gender;
+  category: MemberCategory; // computed, not stored
   status: MemberStatus;
   season: number;
   clubId?: string;

@@ -1,5 +1,6 @@
 import {
-  Discipline,
+  Gender,
+  MemberCategory,
   MemberStatus,
   VerificationResult,
 } from "../../domain/value-objects";
@@ -16,7 +17,8 @@ export interface VerificationResponseDTO {
     fullName: string;
     licenseNumber: string;
     photoUrl?: string;
-    disciplines: Discipline[];
+    category: MemberCategory;
+    gender: Gender;
     status: MemberStatus;
     season: number;
   };

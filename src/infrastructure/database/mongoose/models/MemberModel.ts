@@ -1,10 +1,5 @@
 import { model, Schema, Document } from "mongoose";
-import {
-  Discipline,
-  Gender,
-  MemberLevel,
-  MemberStatus,
-} from "../../../../domain/value-objects";
+import { Gender, MemberStatus } from "../../../../domain/value-objects";
 
 export interface IMemberDocument extends Document {
   licenseNumber: string;
@@ -15,8 +10,9 @@ export interface IMemberDocument extends Document {
   email: string;
   phone?: string;
   photoUrl?: string;
-  disciplines: Discipline[];
-  level: MemberLevel;
+  height?: number;
+  armSpan?: number;
+  weight?: number;
   status: MemberStatus;
   clubId?: Schema.Types.ObjectId;
   season: number;
@@ -39,7 +35,7 @@ const memberSchema = new Schema<IMemberDocument>(
     gender: {
       type: String,
       required: true,
-      enum: ["male", "female", "other"],
+      enum: ["male", "female"],
     },
     email: {
       type: String,
@@ -50,18 +46,12 @@ const memberSchema = new Schema<IMemberDocument>(
     },
     phone: { type: String, trim: true },
     photoUrl: { type: String },
-    disciplines: [
-      {
-        type: String,
-        enum: Object.values(Discipline),
-      },
-    ],
-    level: {
-      type: String,
-      required: true,
-      enum: Object.values(MemberLevel),
-      default: MemberLevel.AMATEUR,
-    },
+
+    // Physical stats
+    height: { type: Number, min: 100, max: 250 }, // cm
+    armSpan: { type: Number, min: 100, max: 250 }, // cm
+    weight: { type: Number, min: 30, max: 200 }, // kg
+
     status: {
       type: String,
       required: true,
@@ -82,6 +72,7 @@ const memberSchema = new Schema<IMemberDocument>(
 memberSchema.index({ status: 1 });
 memberSchema.index({ season: 1 });
 memberSchema.index({ clubId: 1 });
+memberSchema.index({ gender: 1 });
 memberSchema.index({
   firstName: "text",
   lastName: "text",

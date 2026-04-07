@@ -11,6 +11,7 @@ export interface IMembershipCardDocument extends Document {
   validFrom: Date;
   validUntil: Date;
   generatedAt: Date;
+  qrDataUrl?: string;
   downloadedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -29,6 +30,7 @@ const membershipCardSchema = new Schema<IMembershipCardDocument>(
     pdfUrl: { type: String },
     qrPayload: { type: String, required: true, unique: true },
     isValid: { type: Boolean, required: true, default: true },
+    qrDataUrl: { type: String },
     validFrom: { type: Date, required: true },
     validUntil: { type: Date, required: true },
     generatedAt: { type: Date, default: Date.now },
