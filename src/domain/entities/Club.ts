@@ -4,6 +4,7 @@ export interface ClubProps {
   id?: string;
   name: string;
   code: string;
+  clubShort: string;
   region: string;
   city: string;
   status: ClubStatus;
@@ -19,6 +20,7 @@ export class Club {
   readonly id?: string;
   readonly name: string;
   readonly code: string;
+  readonly clubShort: string;
   readonly region: string;
   readonly city: string;
   readonly status: ClubStatus;
@@ -33,6 +35,7 @@ export class Club {
     this.id = props.id;
     this.name = props.name;
     this.code = props.code.toUpperCase();
+    this.clubShort = props.clubShort?.toUpperCase() ?? "";
     this.region = props.region;
     this.city = props.city;
     this.status = props.status;
@@ -57,6 +60,7 @@ export class Club {
       id: this.id,
       name: this.name,
       code: this.code,
+      clubShort: this.clubShort,
       region: this.region,
       city: this.city,
       status: this.status,

@@ -14,6 +14,7 @@ export class CreateClubUseCase {
     const club = new Club({
       name: dto.name,
       code: dto.code,
+      clubShort: dto.clubShort, // ← new
       region: dto.region,
       city: dto.city,
       disciplines: dto.disciplines,

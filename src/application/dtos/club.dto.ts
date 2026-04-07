@@ -1,8 +1,13 @@
 import { ClubStatus, Discipline } from "../../domain/value-objects";
 
+export interface UpdateClubStatusDTO {
+  status: ClubStatus;
+}
+
 export interface CreateClubDTO {
   name: string;
   code: string;
+  clubShort: string; // ← new
   region: string;
   city: string;
   disciplines: Discipline[];
@@ -11,14 +16,11 @@ export interface CreateClubDTO {
   presidentPhone?: string;
 }
 
-export interface UpdateClubStatusDTO {
-  status: ClubStatus;
-}
-
 export interface ClubResponseDTO {
   id: string;
   name: string;
   code: string;
+  clubShort: string; // ← new
   region: string;
   city: string;
   status: ClubStatus;

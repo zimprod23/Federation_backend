@@ -3,7 +3,8 @@
 
 # ── After login, paste the token here ────────────────────────────────────────
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ0Y2U5MThlZTMwYjA0YTk3OWIwZGQiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzU1NTQxOTgsImV4cCI6MTc3NTY0MDU5OH0.kjQz68oegGUz4GvMfqdKSB_gGdvIME0yCiZiB2R_ZLE
-@qrToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6IjY5ZDEwNzkxMGNmOTM0ZGZhYmI0Y2M4YSIsImxpY2Vuc2VOdW1iZXIiOiJGRUQtMjAyNi0wMDAwNCIsInNlYXNvbiI6MjAyNiwiaWF0IjoxNzc1MzExNTQ3fQ.vITg3F73I0V1uWu8fZ6FPe7pP58fjT5166yVOLo1BIc
+@qrToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6IjY5ZDRlYmE5YWZkMWM1MTE1NTBkZWZmZiIsImxpY2Vuc2VOdW1iZXIiOiJGRUQtMjAyNi0wMDAwMyIsInNlYXNvbiI6MjAyNiwiaWF0IjoxNzc1NTYyMzI0fQ.X3yLV_aY4mPyvUfV3EIOTJq4lRbYS5KjFJBLR_xxBFM
+@clubId = 69d4f3e9d30098314bad0bb4
 ###
 
 # ════════════════════════════════════════════════════════════════
@@ -66,19 +67,18 @@ Authorization: Bearer {{token}}
 # ════════════════════════════════════════════════════════════════
 
 ### Create a club
+### Create club with clubShort
 POST {{baseUrl}}/api/v1/clubs
-Content-Type: {{contentType}}
+Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "Casablanca Surf Club",
-  "code": "CSC-CASA",
-  "region": "Casablanca-Settat",
-  "city": "Casablanca",
-  "disciplines": ["surfing", "bodyboard"],
-  "presidentName": "Hassan Alaoui",
-  "presidentEmail": "president@csc.ma",
-  "presidentPhone": "+212600000001"
+  "name":      "Club Nautique Plage Rabat",
+  "code":      "CNPR",
+  "clubShort": "PR",
+  "region":    "Rabat-Salé-Kénitra",
+  "city":      "Rabat",
+  "disciplines": ["surfing", "paddling"]
 }
 
 ###
@@ -91,13 +91,13 @@ Authorization: Bearer {{token}}
 
 ### Get club by ID
 # Replace CLUB_ID with the id from the create response
-GET {{baseUrl}}/api/v1/clubs/cih
+GET {{baseUrl}}/api/v1/clubs/{{clubId}}
 Authorization: Bearer {{token}}
 
 ###
 
 ### Update club status to active
-PATCH {{baseUrl}}/api/v1/clubs/69d10468ceca70105ca5c1ab/status
+PATCH {{baseUrl}}/api/v1/clubs/{{clubId}}/status
 Content-Type: {{contentType}}
 Authorization: Bearer {{token}}
 
@@ -116,16 +116,16 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "firstName":   "Youssef",
-  "lastName":    "Benali",
+  "firstName":   "Youssef1",
+  "lastName":    "Benali1",
   "dateOfBirth": "2004-03-10",
   "gender":      "male",
-  "email":       "youssef.benali@gmail.com",
-  "phone":       "+212600000002",
+  "email":       "youssef.benali1@gmail.com",
+  "phone":       "+2126000000024",
   "height":      180,
   "armSpan":     178,
   "weight":      70,
-  "clubId":      ""
+  "clubId":      "{{clubId}}"
 }
 
 ###
@@ -136,15 +136,16 @@ Content-Type: {{contentType}}
 Authorization: Bearer {{token}}
 
 {
-  "firstName": "Salma",
-  "lastName": "Idrissi",
-  "dateOfBirth": "1998-03-22",
-  "gender": "female",
-  "email": "salma.idrissi@gmail.com",
-  "phone": "+212600000003",
-  "disciplines": ["surfing", "paddling"],
-  "level": "semi-pro",
-  "clubId": "69d10468ceca70105ca5c1ab"
+  "firstName":   "Salma",
+  "lastName":    "Benali1",
+  "dateOfBirth": "2004-03-10",
+  "gender":      "female",
+  "email":       "salma.benali1@gmail.com",
+  "phone":       "+212600024",
+  "height":      150,
+  "armSpan":     138,
+  "weight":      80,
+  "clubId":      "{{clubId}}"
 }
 
 ###
@@ -163,13 +164,13 @@ Authorization: Bearer {{token}}
 
 ### Get member by ID
 # Replace MEMBER_ID with the id from the create response
-GET {{baseUrl}}/api/v1/members/69d107910cf934dfabb4cc8b
+GET {{baseUrl}}/api/v1/members/69d4eba9afd1c511550defff
 Authorization: Bearer {{token}}
 
 ###
 
 ### Update member status to active
-PATCH {{baseUrl}}/api/v1/members/69d107910cf934dfabb4cc8a
+PATCH {{baseUrl}}/api/v1/members/69d4eba9afd1c511550defff
 Content-Type: {{contentType}}
 Authorization: Bearer {{token}}
 
@@ -201,19 +202,19 @@ Authorization: Bearer {{token}}
 
 ### Generate membership card
 # Member must exist — replace MEMBER_ID
-POST {{baseUrl}}/api/v1/cards/69d107910cf934dfabb4cc8a/generate
+POST {{baseUrl}}/api/v1/cards/69d4eba9afd1c511550defff/generate
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
   "validFrom":  "2025-01-01",
-  "validUntil": "2025-12-31"
+  "validUntil": "2027-12-31"
 }
 
 ###
 
 ### Get card for a member
-GET {{baseUrl}}/api/v1/cards/69d107910cf934dfabb4cc8a
+GET {{baseUrl}}/api/v1/cards/69d4eba9afd1c511550defff
 Authorization: Bearer {{token}}
 
 ###
@@ -221,7 +222,7 @@ Authorization: Bearer {{token}}
 
 
 ### Get card for a specific season
-GET {{baseUrl}}/api/v1/cards/69d107a80cf934dfabb4cc8f?season=2025
+GET {{baseUrl}}/api/v1/cards/69d4eba9afd1c511550defff?season=2026
 Authorization: Bearer {{token}}
 
 
@@ -242,6 +243,15 @@ Authorization: Bearer {{token}}
 
 {
   "token": "{{qrToken}}",
+  "location": "Competition entrance - Casablanca"
+}
+###
+POST {{baseUrl}}/api/v1/verify/scan
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "token":    "{{qrToken}}",
   "location": "Competition entrance - Casablanca"
 }
 

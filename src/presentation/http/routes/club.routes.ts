@@ -16,6 +16,7 @@ import { validateObjectId } from "../../../shared/mongoose.utils";
 const createClubSchema = z.object({
   name: z.string().min(1).max(200).trim(),
   code: z.string().min(2).max(20).trim(),
+  clubShort: z.string().min(1).max(10).trim(), // ← new
   region: z.string().min(1).trim(),
   city: z.string().min(1).trim(),
   disciplines: z.array(z.nativeEnum(Discipline)).min(1),

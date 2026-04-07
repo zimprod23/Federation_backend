@@ -13,6 +13,7 @@ export class MongoClubRepository implements IClubRepository {
       id: doc._id.toString(),
       name: doc.name,
       code: doc.code,
+      clubShort: doc.clubShort ?? "", // ← new
       region: doc.region,
       city: doc.city,
       status: doc.status as ClubStatus,
@@ -29,6 +30,7 @@ export class MongoClubRepository implements IClubRepository {
     return {
       name: club.name,
       code: club.code,
+      clubShort: club.clubShort ?? "",
       region: club.region,
       city: club.city,
       status: club.status,
@@ -38,7 +40,6 @@ export class MongoClubRepository implements IClubRepository {
       presidentPhone: club.presidentPhone,
     };
   }
-
   async findById(id: string): Promise<Club | null> {
     const doc = await ClubModel.findById(id).lean();
     return doc ? this.toDomain(doc as IClubDocument) : null;

@@ -6,6 +6,7 @@ export function toClubResponse(club: Club): ClubResponseDTO {
     id: club.id!,
     name: club.name,
     code: club.code,
+    clubShort: club.clubShort,
     region: club.region,
     city: club.city,
     status: club.status,

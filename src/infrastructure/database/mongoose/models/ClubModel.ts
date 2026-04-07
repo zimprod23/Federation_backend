@@ -4,6 +4,7 @@ import { ClubStatus, Discipline } from "../../../../domain/value-objects";
 export interface IClubDocument extends Document {
   name: string;
   code: string;
+  clubShort: string;
   region: string;
   city: string;
   status: ClubStatus;
@@ -25,6 +26,7 @@ const clubSchema = new Schema<IClubDocument>(
       trim: true,
       uppercase: true,
     },
+    clubShort: { type: String, required: true, trim: true, uppercase: true },
     region: { type: String, required: true, trim: true },
     city: { type: String, required: true, trim: true },
     status: {

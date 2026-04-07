@@ -1,13 +1,19 @@
-import { IMemberRepository } from "../../../domain/interfaces";
 import { Member } from "../../../domain/entities/Member";
-import { MemberAlreadyExistsError } from "../../../domain/errors";
+import {
+  ClubNotFoundError,
+  MemberAlreadyExistsError,
+} from "../../../domain/errors";
+import { IClubRepository, IMemberRepository } from "../../../domain/interfaces";
 import { MemberStatus } from "../../../domain/value-objects";
+import { LicenseNumber } from "../../../domain/value-objects/LicenceNumber";
 import { CreateMemberDTO, MemberResponseDTO } from "../../dtos";
 import { toMemberResponse } from "./toMemberResponse";
-import { LicenseNumber } from "../../../domain/value-objects/LicenceNumber";
 
 export class CreateMemberUseCase {
-  constructor(private readonly memberRepo: IMemberRepository) {}
+  constructor(
+    private readonly memberRepo: IMemberRepository,
+    private readonly clubRepo: IClubRepository,
+  ) {}
 
   async execute(dto: CreateMemberDTO): Promise<MemberResponseDTO> {
     const existing = await this.memberRepo.findByEmail(dto.email);
@@ -15,10 +21,22 @@ export class CreateMemberUseCase {
 
     const season = new Date().getFullYear();
     const seq = await this.memberRepo.nextSequence(season);
-    const license = LicenseNumber.generate(seq, season);
+
+    // Fetch club to get clubShort for license number
+    let clubCode: string | undefined;
+    let clubShort: string | undefined;
+
+    if (dto.clubId) {
+      const club = await this.clubRepo.findById(dto.clubId);
+      if (!club) throw new ClubNotFoundError(dto.clubId);
+      clubCode = club.code;
+      clubShort = club.clubShort;
+    }
+
+    const licenseNumber = LicenseNumber.generate(seq, clubCode, clubShort);
 
     const member = new Member({
-      licenseNumber: license,
+      licenseNumber,
       firstName: dto.firstName,
       lastName: dto.lastName,
       dateOfBirth: new Date(dto.dateOfBirth),

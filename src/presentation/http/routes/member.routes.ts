@@ -6,6 +6,7 @@ import { ApiResponseBuilder } from "../../../shared/api-response";
 import { createAuthenticate, requireRole } from "../middleware/authenticate";
 import {
   IAuthTokenService,
+  IClubRepository,
   IMemberRepository,
   IStorageService,
 } from "../../../domain/interfaces";
@@ -76,6 +77,7 @@ const listMembersSchema = z.object({
 });
 export function memberRouter(
   memberRepo: IMemberRepository,
+  clubRepo: IClubRepository,
   storageService: IStorageService,
   authTokenSvc: IAuthTokenService,
 ): Router {
@@ -90,7 +92,7 @@ export function memberRouter(
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const dto = validate(createMemberSchema, req.body);
-        const uc = new CreateMemberUseCase(memberRepo);
+        const uc = new CreateMemberUseCase(memberRepo, clubRepo);
         const result = await uc.execute(dto);
         res
           .status(201)
