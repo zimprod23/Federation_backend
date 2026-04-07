@@ -48,6 +48,7 @@ const createMemberSchema = z.object({
   phone: z.string().optional(),
   height: z.number().min(100).max(250).optional(),
   armSpan: z.number().min(100).max(250).optional(),
+  cin: z.string().min(1).max(20).trim().optional(),
   weight: z.number().min(30).max(200).optional(),
   clubId: z.string().optional(),
 });
@@ -60,6 +61,7 @@ const updateMemberSchema = z
     height: z.number().min(100).max(250).optional(),
     armSpan: z.number().min(100).max(250).optional(),
     weight: z.number().min(30).max(200).optional(),
+    cin: z.string().min(1).max(20).trim().optional(),
     clubId: z.string().optional(),
     status: z.nativeEnum(MemberStatus).optional(),
   })
@@ -71,6 +73,7 @@ const listMembersSchema = z.object({
   status: z.nativeEnum(MemberStatus).optional(),
   gender: z.enum(["male", "female"]).optional(),
   category: z.nativeEnum(MemberCategory).optional(),
+  cin: z.string().min(1).max(20).trim().optional(),
   clubId: z.string().optional(),
   season: z.coerce.number().optional(),
   search: z.string().optional(),

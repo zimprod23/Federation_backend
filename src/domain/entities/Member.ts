@@ -16,6 +16,7 @@ export interface MemberProps {
   email: string;
   phone?: string;
   photoUrl?: string;
+  cin?: string;
   height?: number; // cm
   armSpan?: number; // cm
   weight?: number; // kg
@@ -35,6 +36,7 @@ export class Member {
   readonly dateOfBirth: Date;
   readonly gender: Gender;
   readonly email: string;
+  readonly cin?: string;
   readonly phone?: string;
   readonly photoUrl?: string;
   readonly height?: number;
@@ -63,6 +65,7 @@ export class Member {
     this.status = props.status;
     this.clubId = props.clubId;
     this.season = props.season;
+    this.cin = props.cin;
     this.qrToken = props.qrToken;
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
@@ -123,6 +126,7 @@ export class Member {
       status: this.status,
       clubId: this.clubId,
       season: this.season,
+      cin: this.cin,
       qrToken: this.qrToken,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,

@@ -13,6 +13,7 @@ export interface IMemberDocument extends Document {
   height?: number;
   armSpan?: number;
   weight?: number;
+  cin?: string;
   status: MemberStatus;
   clubId?: Schema.Types.ObjectId;
   season: number;
@@ -46,7 +47,7 @@ const memberSchema = new Schema<IMemberDocument>(
     },
     phone: { type: String, trim: true },
     photoUrl: { type: String },
-
+    cin: { type: String, unique: true, trim: true },
     // Physical stats
     height: { type: Number, min: 100, max: 250 }, // cm
     armSpan: { type: Number, min: 100, max: 250 }, // cm

@@ -202,7 +202,7 @@ Authorization: Bearer {{token}}
 
 ### Generate membership card
 # Member must exist — replace MEMBER_ID
-POST {{baseUrl}}/api/v1/cards/69d4eba9afd1c511550defff/generate
+POST {{baseUrl}}/api/v1/cards/69d4f428d30098314bad0bb6/generate
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -214,7 +214,7 @@ Content-Type: application/json
 ###
 
 ### Get card for a member
-GET {{baseUrl}}/api/v1/cards/69d4eba9afd1c511550defff
+GET {{baseUrl}}/api/v1/cards/69d4f428d30098314bad0bb6
 Authorization: Bearer {{token}}
 
 ###

@@ -12,6 +12,7 @@ export interface CreateMemberDTO {
   email: string;
   phone?: string;
   height?: number;
+  cin?: string;
   armSpan?: number;
   weight?: number;
   clubId?: string;
@@ -23,6 +24,7 @@ export interface UpdateMemberDTO {
   phone?: string;
   height?: number;
   armSpan?: number;
+  cin?: string;
   weight?: number;
   clubId?: string;
   status?: MemberStatus;
@@ -33,6 +35,7 @@ export interface ListMembersDTO {
   limit?: number;
   status?: MemberStatus;
   gender?: Gender;
+  cin?: string;
   category?: MemberCategory;
   clubId?: string;
   season?: number;
@@ -51,6 +54,7 @@ export interface MemberResponseDTO {
   height?: number;
   armSpan?: number;
   weight?: number;
+  cin?: string;
   gender: Gender;
   category: MemberCategory; // computed, not stored
   status: MemberStatus;
