@@ -52,6 +52,7 @@ export interface MemberResponseDTO {
   phone?: string;
   photoUrl?: string;
   height?: number;
+  dateOfBirth?: string;
   armSpan?: number;
   weight?: number;
   cin?: string;

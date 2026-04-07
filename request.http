@@ -2,9 +2,9 @@
 @contentType = application/json
 
 # ── After login, paste the token here ────────────────────────────────────────
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ0Y2U5MThlZTMwYjA0YTk3OWIwZGQiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzU1NTQxOTgsImV4cCI6MTc3NTY0MDU5OH0.kjQz68oegGUz4GvMfqdKSB_gGdvIME0yCiZiB2R_ZLE
-@qrToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6IjY5ZDRlYmE5YWZkMWM1MTE1NTBkZWZmZiIsImxpY2Vuc2VOdW1iZXIiOiJGRUQtMjAyNi0wMDAwMyIsInNlYXNvbiI6MjAyNiwiaWF0IjoxNzc1NTYyMzI0fQ.X3yLV_aY4mPyvUfV3EIOTJq4lRbYS5KjFJBLR_xxBFM
-@clubId = 69d5018cee456aeeab6b251c
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ1NzFkNGZlMTU1NDVjOTE5NmNhYTYiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzU1OTYyOTMsImV4cCI6MTc3NTY4MjY5M30.uJl0qf59NQ4HlF1h53BPN6L9SLiseEu4_jrw26f9P_Q
+@qrToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6IjY5ZDU3MzQ4MzIyMjEzZjdkMDljMDFkYSIsImxpY2Vuc2VOdW1iZXIiOiJDTlBSWFhZL1BSMDAxIiwic2Vhc29uIjoyMDI2LCJpYXQiOjE3NzU1OTY5MjR9.XMuZ7MYLchU_07srWQeukJ9dandj-OMCofQjZ84f2_Y
+@clubId = 69d57334322213f7d09c01d9
 ###
 
 # ════════════════════════════════════════════════════════════════
@@ -157,6 +157,7 @@ Authorization: Bearer {{token}}
   "lastName":    "Benali1",
   "dateOfBirth": "2004-03-10",
   "gender":      "female",
+   "cin":         "AB12345jj6",
   "email":       "salma.benali1@gmail.com",
   "phone":       "+212600024",
   "height":      150,
@@ -219,19 +220,19 @@ Authorization: Bearer {{token}}
 
 ### Generate membership card
 # Member must exist — replace MEMBER_ID
-POST {{baseUrl}}/api/v1/cards/69d4f428d30098314bad0bb6/generate
+POST {{baseUrl}}/api/v1/cards/69d57348322213f7d09c01da/generate
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
   "validFrom":  "2025-01-01",
-  "validUntil": "2027-12-31"
+  "validUntil": "2025-12-31"
 }
 
 ###
 
 ### Get card for a member
-GET {{baseUrl}}/api/v1/cards/69d4f428d30098314bad0bb6
+GET {{baseUrl}}/api/v1/cards/69d57348322213f7d09c01da
 Authorization: Bearer {{token}}
 
 ###

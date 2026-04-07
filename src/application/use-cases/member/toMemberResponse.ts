@@ -16,6 +16,7 @@ export function toMemberResponse(member: Member): MemberResponseDTO {
     weight: member.weight,
     gender: member.gender,
     cin: member.cin,
+    dateOfBirth: member.dateOfBirth?.toISOString(),
     category: member.getCategory(), // computed from DOB
     status: member.status,
     season: member.season,
