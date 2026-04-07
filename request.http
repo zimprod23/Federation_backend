@@ -130,6 +130,23 @@ Authorization: Bearer {{token}}
 
 ###
 
+
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName":   "Adam",
+  "lastName":    "safih",
+  "dateOfBirth": "2004-03-10",
+  "gender":      "male",
+  "email":       "youssef2@gmail.com",
+  "cin":         "AB123456",
+  "height":      180,
+  "armSpan":     178,
+  "weight":      70
+}
+
 ### Create a second member
 POST {{baseUrl}}/api/v1/members
 Content-Type: {{contentType}}

@@ -75,6 +75,14 @@ export async function createApp() {
   app.use(express.urlencoded({ extended: true }));
   app.use(apiLimiter);
 
+  if (cfg.STORAGE_DRIVER === "local") {
+    app.use(
+      "/uploads",
+      cors(), // ← allow cross-origin requests for images
+      express.static(cfg.LOCAL_UPLOAD_DIR),
+    );
+  }
+
   // Serve uploaded files locally in dev
   if (cfg.STORAGE_DRIVER === "local") {
     app.use("/uploads", express.static(cfg.LOCAL_UPLOAD_DIR));

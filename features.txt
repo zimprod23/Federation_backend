@@ -1,0 +1,7 @@
+What's left to build:
+FeaturePriorityBulk import from Excel (the engagement sheet)HighMember self-lookup by license numberMediumCompetition rankings endpointMediumExport results to ExcelMediumTests (unit + integration)HighSwagger / API documentationLow
+
+What do you want to tackle next? My suggestion would be either:
+Option A — Bulk import from Excel — directly digitize the engagement sheets your federation already uses. This is high business value since they already have years of data in that format.
+Option B — Tests — the codebase is stable enough now to write proper unit tests for the use cases. Important before going to production.
+Option C — Rankings — auto-compute rankings per event after results are recorded, with proper tie-breaking.
