@@ -3,7 +3,17 @@ import { Club } from "../entities/Club";
 import { User } from "../entities/User";
 import { MembershipCard } from "../entities/MembershipCard";
 import { VerificationLog } from "../entities/VerificationLog";
-import { Gender, MemberStatus } from "../value-objects";
+import {
+  Gender,
+  MemberStatus,
+  CompetitionStatus,
+  EventDistance,
+  MemberCategory,
+} from "../value-objects";
+import { Competition } from "../entities/Competition";
+import { CompetitionEvent } from "../entities/CompetitionEvent";
+import { Registration } from "../entities/Registration";
+import { Result } from "../entities/Result";
 
 // ─── Shared ───────────────────────────────────────────────────────────────────
 export interface PaginationParams {
@@ -124,4 +134,61 @@ export interface IAuthTokenService {
 export interface IPasswordHasher {
   hash(plain: string): Promise<string>;
   compare(plain: string, hashed: string): Promise<boolean>;
+}
+
+// ─── ICompetitionRepository ───────────────────────────────────────────────────
+export interface CompetitionFilters {
+  status?: CompetitionStatus;
+  season?: number;
+  type?: string;
+}
+
+export interface ICompetitionRepository {
+  findById(id: string): Promise<Competition | null>;
+  findAll(
+    pagination: PaginationParams,
+    filters: CompetitionFilters,
+  ): Promise<PaginatedResult<Competition>>;
+  save(competition: Competition): Promise<Competition>;
+  delete(id: string): Promise<void>;
+}
+
+// ─── IEventRepository ────────────────────────────────────────────────────────
+export interface IEventRepository {
+  findById(id: string): Promise<CompetitionEvent | null>;
+  findByCompetitionId(competitionId: string): Promise<CompetitionEvent[]>;
+  findByCompetitionAndFilter(
+    competitionId: string,
+    distance?: EventDistance,
+    category?: MemberCategory,
+    gender?: Gender,
+  ): Promise<CompetitionEvent[]>;
+  save(event: CompetitionEvent): Promise<CompetitionEvent>;
+  delete(id: string): Promise<void>;
+}
+
+// ─── IRegistrationRepository ─────────────────────────────────────────────────
+export interface IRegistrationRepository {
+  findById(id: string): Promise<Registration | null>;
+  findByEventId(eventId: string): Promise<Registration[]>;
+  findByMemberAndEvent(
+    memberId: string,
+    eventId: string,
+  ): Promise<Registration | null>;
+  findByMemberAndCompetition(
+    memberId: string,
+    competitionId: string,
+  ): Promise<Registration[]>;
+  save(registration: Registration): Promise<Registration>;
+}
+
+// ─── IResultRepository ───────────────────────────────────────────────────────
+export interface IResultRepository {
+  findByEventId(eventId: string): Promise<Result[]>;
+  findByMemberAndEvent(
+    memberId: string,
+    eventId: string,
+  ): Promise<Result | null>;
+  findByCompetitionId(competitionId: string): Promise<Result[]>;
+  save(result: Result): Promise<Result>;
 }

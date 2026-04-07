@@ -27,6 +27,11 @@ import { cardRouter } from "./presentation/http/routes/card.routes";
 import { verificationRouter } from "./presentation/http/routes/verification.routes";
 import { LocalStorageService } from "./infrastructure/security/LocalStorageService";
 import { MongoVerificationLogRepository } from "./infrastructure/database/mongoose/repositories/MongoVerificationLogRepository";
+import { MongoCompetitionRepository } from "./infrastructure/database/mongoose/repositories/MongoCompetitionRepository";
+import { MongoEventRepository } from "./infrastructure/database/mongoose/repositories/MongoEventRepository";
+import { MongoRegistrationRepository } from "./infrastructure/database/mongoose/repositories/MongoRegistrationRepository";
+import { MongoResultRepository } from "./infrastructure/database/mongoose/repositories/MongoResultRepository";
+import { competitionRouter } from "./presentation/http/routes/competition.route";
 
 export async function createApp() {
   const cfg = getConfig();
@@ -40,6 +45,11 @@ export async function createApp() {
   const userRepo = new MongoUserRepository();
   const cardRepo = new MongoCardRepository();
   const verificationRepo = new MongoVerificationLogRepository();
+
+  const competitionRepo = new MongoCompetitionRepository();
+  const eventRepo = new MongoEventRepository();
+  const registrationRepo = new MongoRegistrationRepository();
+  const resultRepo = new MongoResultRepository();
 
   // ── Services ─────────────────────────────────────────────────────────────────
   const passwordHasher = new BcryptPasswordHasher();
@@ -88,6 +98,18 @@ export async function createApp() {
       cardRepo,
       verificationRepo,
       tokenSigner,
+      authTokenSvc,
+    ),
+  );
+
+  app.use(
+    "/api/v1/competitions",
+    competitionRouter(
+      competitionRepo,
+      eventRepo,
+      registrationRepo,
+      resultRepo,
+      memberRepo,
       authTokenSvc,
     ),
   );

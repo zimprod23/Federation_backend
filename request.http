@@ -4,7 +4,7 @@
 # ── After login, paste the token here ────────────────────────────────────────
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ0Y2U5MThlZTMwYjA0YTk3OWIwZGQiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzU1NTQxOTgsImV4cCI6MTc3NTY0MDU5OH0.kjQz68oegGUz4GvMfqdKSB_gGdvIME0yCiZiB2R_ZLE
 @qrToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6IjY5ZDRlYmE5YWZkMWM1MTE1NTBkZWZmZiIsImxpY2Vuc2VOdW1iZXIiOiJGRUQtMjAyNi0wMDAwMyIsInNlYXNvbiI6MjAyNiwiaWF0IjoxNzc1NTYyMzI0fQ.X3yLV_aY4mPyvUfV3EIOTJq4lRbYS5KjFJBLR_xxBFM
-@clubId = 69d4f3e9d30098314bad0bb4
+@clubId = 69d5018cee456aeeab6b251c
 ###
 
 # ════════════════════════════════════════════════════════════════
@@ -74,7 +74,7 @@ Authorization: Bearer {{token}}
 
 {
   "name":      "Club Nautique Plage Rabat",
-  "code":      "CNPR",
+  "code":      "CNPRXXY",
   "clubShort": "PR",
   "region":    "Rabat-Salé-Kénitra",
   "city":      "Rabat",
@@ -170,7 +170,7 @@ Authorization: Bearer {{token}}
 ###
 
 ### Update member status to active
-PATCH {{baseUrl}}/api/v1/members/69d4eba9afd1c511550defff
+PATCH {{baseUrl}}/api/v1/members/69d4f428d30098314bad0bb6
 Content-Type: {{contentType}}
 Authorization: Bearer {{token}}
 

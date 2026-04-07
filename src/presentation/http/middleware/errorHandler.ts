@@ -1,7 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import { Error as MongooseError } from "mongoose";
 import { BaseError } from "../../../shared/errors";
-import { DomainError } from "../../../domain/errors";
+import {
+  AlreadyRegisteredError,
+  CompetitionClosedError,
+  CompetitionNotFoundError,
+  DomainError,
+  EventNotFoundError,
+  RegistrationNotFoundError,
+} from "../../../domain/errors";
 import {
   NotFoundError,
   ConflictError,
@@ -55,6 +62,22 @@ function mapDomainError(err: DomainError): BaseError {
     err instanceof InvalidTokenError
   ) {
     return new AuthenticationError(err.message);
+  }
+
+  if (
+    err instanceof CompetitionNotFoundError ||
+    err instanceof EventNotFoundError ||
+    err instanceof RegistrationNotFoundError
+  ) {
+    return new NotFoundError(err.message);
+  }
+
+  if (err instanceof AlreadyRegisteredError) {
+    return new ConflictError(err.message);
+  }
+
+  if (err instanceof CompetitionClosedError) {
+    return new ForbiddenError(err.message);
   }
 
   return new InternalError(err.message);

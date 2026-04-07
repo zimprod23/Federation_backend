@@ -80,3 +80,39 @@ export class InvalidTokenError extends DomainError {
     super("InvalidTokenError", "Token is invalid or malformed");
   }
 }
+
+export class CompetitionNotFoundError extends DomainError {
+  constructor(identifier: string) {
+    super("CompetitionNotFoundError", `Competition not found: ${identifier}`);
+  }
+}
+
+export class EventNotFoundError extends DomainError {
+  constructor(identifier: string) {
+    super("EventNotFoundError", `Event not found: ${identifier}`);
+  }
+}
+
+export class RegistrationNotFoundError extends DomainError {
+  constructor(identifier: string) {
+    super("RegistrationNotFoundError", `Registration not found: ${identifier}`);
+  }
+}
+
+export class AlreadyRegisteredError extends DomainError {
+  constructor(memberId: string, eventId: string) {
+    super(
+      "AlreadyRegisteredError",
+      `Member ${memberId} is already registered for event ${eventId}`,
+    );
+  }
+}
+
+export class CompetitionClosedError extends DomainError {
+  constructor(name: string) {
+    super(
+      "CompetitionClosedError",
+      `Competition is not open for registration: ${name}`,
+    );
+  }
+}

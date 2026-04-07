@@ -54,6 +54,37 @@ export type VerificationResult =
   | "expired"
   | "not_found";
 
+// ─── Competition types ────────────────────────────────────────────────────────
+export enum CompetitionType {
+  TEST_FISA = "test_fisa",
+  CHAMPIONSHIP = "championship",
+  FRIENDLY = "friendly",
+}
+
+// ─── Competition status ───────────────────────────────────────────────────────
+export enum CompetitionStatus {
+  DRAFT = "draft",
+  OPEN = "open",
+  CLOSED = "closed",
+  COMPLETED = "completed",
+}
+
+// ─── Event distances ─────────────────────────────────────────────────────────
+export enum EventDistance {
+  M150 = "150m",
+  M2000 = "2000m",
+  M6000 = "6000m",
+  M10000 = "10000m",
+  M15000 = "15000m",
+}
+
+// ─── Event status ─────────────────────────────────────────────────────────────
+export enum EventStatus {
+  SCHEDULED = "scheduled",
+  ONGOING = "ongoing",
+  COMPLETED = "completed",
+}
+
 // ─── Category calculator ──────────────────────────────────────────────────────
 export function computeCategory(
   dateOfBirth: Date,

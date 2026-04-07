@@ -1,0 +1,90 @@
+@baseUrl = http://localhost:3000
+@contentType = application/json
+
+# ── After login, paste the token here ────────────────────────────────────────
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ0Y2U5MThlZTMwYjA0YTk3OWIwZGQiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzU1NTQxOTgsImV4cCI6MTc3NTY0MDU5OH0.kjQz68oegGUz4GvMfqdKSB_gGdvIME0yCiZiB2R_ZLE
+@qrToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6IjY5ZDRlYmE5YWZkMWM1MTE1NTBkZWZmZiIsImxpY2Vuc2VOdW1iZXIiOiJGRUQtMjAyNi0wMDAwMyIsInNlYXNvbiI6MjAyNiwiaWF0IjoxNzc1NTYyMzI0fQ.X3yLV_aY4mPyvUfV3EIOTJq4lRbYS5KjFJBLR_xxBFM
+@clubId = 69d5018cee456aeeab6b251c
+
+@memberId = 69d4f428d30098314bad0bb6
+
+@competitionId = 69d501b1ee456aeeab6b251d
+@eventId = 69d501f3ee456aeeab6b251e
+@registrationId =
+
+### Create competition
+POST {{baseUrl}}/api/v1/competitions
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name":      "TEST FISA et Championnat du Maroc d'Hiver",
+  "type":      "test_fisa",
+  "location":  "Salle Ahmed Chehoud",
+  "city":      "Casablanca",
+  "startDate": "2026-04-11",
+  "endDate":   "2026-04-12",
+  "season":    2026
+}
+
+###
+
+### Open the competition
+PATCH {{baseUrl}}/api/v1/competitions/{{competitionId}}/status
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{ "status": "open" }
+
+###
+
+### Create an event (150m Senior Men)
+POST {{baseUrl}}/api/v1/competitions/{{competitionId}}/events
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "distance":    "150m",
+  "category":    "senior",
+  "gender":      "male",
+  "scheduledAt": "2026-04-11T09:00:00"
+}
+
+###
+
+### Register a member
+POST {{baseUrl}}/api/v1/competitions/{{competitionId}}/events/{{eventId}}/registrations
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{ "memberId": "{{memberId}}" }
+
+###
+
+### Get registrations for event
+GET {{baseUrl}}/api/v1/competitions/{{competitionId}}/events/{{eventId}}/registrations
+Authorization: Bearer {{token}}
+
+###
+
+### Record a result
+POST {{baseUrl}}/api/v1/competitions/{{competitionId}}/events/{{eventId}}/results
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "memberId":       "{{memberId}}",
+  "registrationId": "{{registrationId}}",
+  "rank":           1,
+  "finalTime":      "00:32.4",
+  "splitTime500":   "01:48.0",
+  "strokeRate":     28,
+  "heartRate":      175,
+  "watts":          320
+}
+
+###
+
+### Get event results (ranked)
+GET {{baseUrl}}/api/v1/competitions/{{competitionId}}/events/{{eventId}}/results
+Authorization: Bearer {{token}}
