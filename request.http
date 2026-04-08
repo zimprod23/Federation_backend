@@ -4,7 +4,7 @@
 # ── After login, paste the token here ────────────────────────────────────────
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ1NzFkNGZlMTU1NDVjOTE5NmNhYTYiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzU1OTYyOTMsImV4cCI6MTc3NTY4MjY5M30.uJl0qf59NQ4HlF1h53BPN6L9SLiseEu4_jrw26f9P_Q
 @qrToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6IjY5ZDU3MzQ4MzIyMjEzZjdkMDljMDFkYSIsImxpY2Vuc2VOdW1iZXIiOiJDTlBSWFhZL1BSMDAxIiwic2Vhc29uIjoyMDI2LCJpYXQiOjE3NzU1OTY5MjR9.XMuZ7MYLchU_07srWQeukJ9dandj-OMCofQjZ84f2_Y
-@clubId = 69d57334322213f7d09c01d9
+@clubId = 69d4f3e9d30098314bad0bb4
 ###
 
 # ════════════════════════════════════════════════════════════════

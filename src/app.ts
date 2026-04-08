@@ -32,6 +32,7 @@ import { MongoEventRepository } from "./infrastructure/database/mongoose/reposit
 import { MongoRegistrationRepository } from "./infrastructure/database/mongoose/repositories/MongoRegistrationRepository";
 import { MongoResultRepository } from "./infrastructure/database/mongoose/repositories/MongoResultRepository";
 import { competitionRouter } from "./presentation/http/routes/competition.route";
+import { statsRouter } from "./presentation/http/routes/stats.routes";
 
 export async function createApp() {
   const cfg = getConfig();
@@ -99,6 +100,7 @@ export async function createApp() {
     "/api/v1/cards",
     cardRouter(memberRepo, cardRepo, storageService, tokenSigner, authTokenSvc),
   );
+  app.use("/api/v1/stats", statsRouter(authTokenSvc));
   app.use(
     "/api/v1/verify",
     verificationRouter(
