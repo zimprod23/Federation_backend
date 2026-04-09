@@ -47,7 +47,7 @@ const memberSchema = new Schema<IMemberDocument>(
     },
     phone: { type: String, trim: true },
     photoUrl: { type: String },
-    cin: { type: String, /*unique: true,*/ trim: true },
+    cin: { type: String, required: false, /*unique: true,*/ trim: true },
     // Physical stats
     height: { type: Number, min: 100, max: 250 }, // cm
     armSpan: { type: Number, min: 100, max: 250 }, // cm
@@ -69,7 +69,13 @@ const memberSchema = new Schema<IMemberDocument>(
     toObject: { virtuals: true },
   },
 );
-
+memberSchema.index(
+  { cin: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { cin: { $exists: true, $ne: null } },
+  },
+);
 memberSchema.index({ status: 1 });
 memberSchema.index({ season: 1 });
 memberSchema.index({ clubId: 1 });

@@ -16,6 +16,8 @@ export enum MemberStatus {
 
 // ─── Member category — computed from date of birth ───────────────────────────
 export enum MemberCategory {
+  U15 = "u15", // under 15
+  U19 = "u19", // 15 to 18
   JUNIOR = "junior", // under 18
   U23 = "u23", // 18 to 22
   SENIOR = "senior", // 23 and above
@@ -59,6 +61,9 @@ export enum CompetitionType {
   TEST_FISA = "test_fisa",
   CHAMPIONSHIP = "championship",
   FRIENDLY = "friendly",
+  INDOOR = "indoor",
+  BEACH_ROWING = "beachrowing",
+  CLASSIC = "classic",
 }
 
 // ─── Competition status ───────────────────────────────────────────────────────
@@ -76,6 +81,9 @@ export enum EventDistance {
   M6000 = "6000m",
   M10000 = "10000m",
   M15000 = "15000m",
+  M20000 = "20000m",
+  M25000 = "25000m",
+  M50000 = "50000m",
 }
 
 // ─── Event status ─────────────────────────────────────────────────────────────
@@ -101,7 +109,8 @@ export function computeCategory(
 
   const exactAge = hasBirthdayPassed ? age : age - 1;
 
-  if (exactAge < 18) return MemberCategory.JUNIOR;
+  if (exactAge < 15) return MemberCategory.U15;
+  if (exactAge < 19) return MemberCategory.U19;
   if (exactAge < 23) return MemberCategory.U23;
   return MemberCategory.SENIOR;
 }

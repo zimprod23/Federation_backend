@@ -1,0 +1,550 @@
+@baseUrl = http://localhost:3000
+@contentType = application/json
+
+# ── After login, paste the token here ────────────────────────────────────────
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ0Y2U5MThlZTMwYjA0YTk3OWIwZGQiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzU3NDIxMjcsImV4cCI6MTc3NTgyODUyN30.E9oZKSv15SjkysFIq_Pgvapor0XDTyc83p_21U6NCNg
+@qrToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6IjY5ZDU3MzQ4MzIyMjEzZjdkMDljMDFkYSIsImxpY2Vuc2VOdW1iZXIiOiJDTlBSWFhZL1BSMDAxIiwic2Vhc29uIjoyMDI2LCJpYXQiOjE3NzU1OTY5MjR9.XMuZ7MYLchU_07srWQeukJ9dandj-OMCofQjZ84f2_Y
+@clubId = 69d4f3e9d30098314bad0bb4
+###
+
+### Members Import - Generated from Excel
+### Total: 27 members 
+
+### 1. Abderrahmane El alej
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Abderrahmane",
+  "lastName": "El alej",
+  "dateOfBirth": "2004-02-21",
+  "gender": "male",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 176,
+  "armSpan": 178,
+  "weight": 71
+  //"clubId": "DUMMY_CLUB_ID"
+}
+
+###
+
+### 2. Youssef El youssoufi
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Youssef",
+  "lastName": "El youssoufi",
+  "dateOfBirth": "2004-03-10",
+  "gender": "male",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 180,
+  "armSpan": 178,
+  "weight": 70
+}
+
+###
+
+### 3. Achraf Chafik
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Achraf",
+  "lastName": "Chafik",
+  "dateOfBirth": "2003-12-26",
+  "gender": "male",
+  "email": "FRMA2@gmail.com",
+  "phone": "0000000000",
+  "height": 176,
+  "armSpan": 174,
+  "weight": 68
+  
+}
+
+###
+
+### 4. Ayoub Boussta
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Ayoub",
+  "lastName": "Boussta",
+  "dateOfBirth": "2001-01-24",
+  "gender": "male",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 186,
+  "armSpan": 188,
+  "weight": 80,
+  
+}
+
+###
+
+### 5. Amine Nabioui
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Amine",
+  "lastName": "Nabioui",
+  "dateOfBirth": "2006-06-01",
+  "gender": "male",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 177,
+  "armSpan": 178,
+  "weight": 70,
+  
+}
+
+###
+
+### 6. Marouane Boufrir
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Marouane",
+  "lastName": "Boufrir",
+  "dateOfBirth": "2006-01-20",
+  "gender": "male",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 180,
+  "armSpan": 180,
+  "weight": 80,
+  
+}
+
+###
+
+### 7. Jabir Ibrahimi
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Jabir",
+  "lastName": "Ibrahimi",
+  "dateOfBirth": "2005-07-17",
+  "gender": "male",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 176,
+  "armSpan": 175,
+  "weight": 66,
+  
+}
+
+###
+
+### 8. Ilyass Chafik
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Ilyass",
+  "lastName": "Chafik",
+  "dateOfBirth": "2006-04-22",
+  "gender": "male",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 178,
+  "armSpan": 178,
+  "weight": 72,
+  
+}
+
+###
+
+### 9. Ismail Hajjaji
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Ismail",
+  "lastName": "Hajjaji",
+  "dateOfBirth": "2006-05-28",
+  "gender": "male",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 178,
+  "armSpan": 176,
+  "weight": 72,
+  
+}
+
+###
+
+### 10. Ayoub Sabri
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Ayoub",
+  "lastName": "Sabri",
+  "dateOfBirth": "2004-10-14",
+  "gender": "male",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 188,
+  "armSpan": 186,
+  "weight": 85,
+  
+}
+
+###
+
+### 11. Anass Errioui
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Anass",
+  "lastName": "Errioui",
+  "dateOfBirth": "2009-07-24",
+  "gender": "male",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 174,
+  "armSpan": 172,
+  "weight": 72,
+  
+}
+
+###
+
+### 12. Yahya Echchalfi
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Yahya",
+  "lastName": "Echchalfi",
+  "dateOfBirth": "2009-04-03",
+  "gender": "male",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 174,
+  "armSpan": 172,
+  "weight": 68,
+  
+}
+
+###
+
+### 13. Omar Nabioui
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Omar",
+  "lastName": "Nabioui",
+  "dateOfBirth": "2007-12-18",
+  "gender": "male",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 168,
+  "armSpan": 166,
+  "weight": 66,
+  
+}
+
+###
+
+### 14. Souhil Bachnikha
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Souhil",
+  "lastName": "Bachnikha",
+  "dateOfBirth": "2007-07-04",
+  "gender": "male",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": null,
+  "armSpan": null,
+  "weight": null,
+  
+}
+
+###
+
+### 15. Hannah Zara Debray
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Hannah",
+  "lastName": "Zara Debray",
+  "dateOfBirth": "1998-09-17",
+  "gender": "female",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 165,
+  "armSpan": 165,
+  "weight": 68.5,
+  
+}
+
+###
+
+### 16. Majdouline EL Alaoui
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Majdouline",
+  "lastName": "EL Alaoui",
+  "dateOfBirth": "2001-01-23",
+  "gender": "female",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 165,
+  "armSpan": 164,
+  "weight": 58,
+  
+}
+
+###
+
+### 17. Zaineb Jabbour
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Zaineb",
+  "lastName": "Jabbour",
+  "dateOfBirth": "2004-01-05",
+  "gender": "female",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 168,
+  "armSpan": 166,
+  "weight": 66,
+  
+}
+
+###
+
+### 18. Marwa Nkiri
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Marwa",
+  "lastName": "Nkiri",
+  "dateOfBirth": "2006-11-23",
+  "gender": "female",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 168,
+  "armSpan": 166,
+  "weight": 64,
+  
+}
+
+###
+
+### 19. Farah Daoudi
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Farah",
+  "lastName": "Daoudi",
+  "dateOfBirth": "2007-01-01",
+  "gender": "female",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 166,
+  "armSpan": 163,
+  "weight": 58,
+  
+}
+
+###
+
+### 20. Sarah Ghazaz
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Sarah",
+  "lastName": "Ghazaz",
+  "dateOfBirth": "2004-02-23",
+  "gender": "female",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 167,
+  "armSpan": 166,
+  "weight": 61,
+  
+}
+
+###
+
+### 21. Abir Moustakim
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Abir",
+  "lastName": "Moustakim",
+  "dateOfBirth": "2008-06-10",
+  "gender": "female",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 166,
+  "armSpan": 164,
+  "weight": 65,
+  
+}
+
+###
+
+### 22. Ghita Jabbour
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Ghita",
+  "lastName": "Jabbour",
+  "dateOfBirth": "2008-06-25",
+  "gender": "female",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 168,
+  "armSpan": 166,
+  "weight": 64,
+  
+}
+
+###
+
+### 23. Aya Lamjid
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Aya",
+  "lastName": "Lamjid",
+  "dateOfBirth": "2010-01-16",
+  "gender": "female",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 170,
+  "armSpan": 169,
+  "weight": 65,
+  
+}
+
+###
+
+### 24. Fatim zahra El homa
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Fatim zahra",
+  "lastName": "El homa",
+  "dateOfBirth": "2009-01-13",
+  "gender": "female",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 168,
+  "armSpan": 166,
+  "weight": 62,
+  
+}
+
+###
+
+### 25. Aya Raiss
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Aya",
+  "lastName": "Raiss",
+  "dateOfBirth": null,
+  "gender": "female",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 166,
+  "armSpan": 164,
+  "weight": 68,
+  
+}
+
+###
+
+### 26. Rania Alila
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Rania",
+  "lastName": "Alila",
+  "dateOfBirth": "2007-02-26",
+  "gender": "female",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 167,
+  "armSpan": 164,
+  "weight": 66,
+  
+}
+
+###
+
+### 27. Marwa Chmandri
+POST {{baseUrl}}/api/v1/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Marwa",
+  "lastName": "Chmandri",
+  "dateOfBirth": "2009-12-26",
+  "gender": "female",
+  "email": "FRMA@gmail.com",
+  "phone": "0000000000",
+  "height": 168,
+  "armSpan": 166,
+  "weight": 65,
+  
+}
+
+###
