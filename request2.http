@@ -2,7 +2,7 @@
 @contentType = application/json
 
 # ── After login, paste the token here ────────────────────────────────────────
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ0Y2U5MThlZTMwYjA0YTk3OWIwZGQiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzU3NDIxMjcsImV4cCI6MTc3NTgyODUyN30.E9oZKSv15SjkysFIq_Pgvapor0XDTyc83p_21U6NCNg
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ1NzFkNGZlMTU1NDVjOTE5NmNhYTYiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzU3NjM5MTYsImV4cCI6MTc3NTg1MDMxNn0.Z_YwS3FNsVAlbRdRKyn4dxojeNtO9LP6My0OrmIolUY
 @qrToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6IjY5ZDU3MzQ4MzIyMjEzZjdkMDljMDFkYSIsImxpY2Vuc2VOdW1iZXIiOiJDTlBSWFhZL1BSMDAxIiwic2Vhc29uIjoyMDI2LCJpYXQiOjE3NzU1OTY5MjR9.XMuZ7MYLchU_07srWQeukJ9dandj-OMCofQjZ84f2_Y
 @clubId = 69d4f3e9d30098314bad0bb4
 ###
@@ -73,12 +73,9 @@ Authorization: Bearer {{token}}
   "lastName": "Boussta",
   "dateOfBirth": "2001-01-24",
   "gender": "male",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 186,
   "armSpan": 188,
-  "weight": 80,
-  
+  "weight": 80
 }
 
 ###
@@ -93,12 +90,9 @@ Authorization: Bearer {{token}}
   "lastName": "Nabioui",
   "dateOfBirth": "2006-06-01",
   "gender": "male",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 177,
   "armSpan": 178,
-  "weight": 70,
-  
+  "weight": 70
 }
 
 ###

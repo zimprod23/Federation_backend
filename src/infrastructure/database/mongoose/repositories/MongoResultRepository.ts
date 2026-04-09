@@ -88,4 +88,8 @@ export class MongoResultRepository implements IResultRepository {
     const doc = await ResultModel.create(data);
     return this.toDomain(doc as unknown as IResultDocument);
   }
+  async deleteByEventId(eventId: string): Promise<void> {
+    // Deletes all results associated with the specific event
+    await ResultModel.deleteMany({ eventId: eventId });
+  }
 }

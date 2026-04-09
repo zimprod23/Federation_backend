@@ -93,4 +93,8 @@ export class MongoRegistrationRepository implements IRegistrationRepository {
     const doc = await RegistrationModel.create(data);
     return this.toDomain(doc as unknown as IRegistrationDocument);
   }
+  async deleteByEventId(eventId: string): Promise<void> {
+    // Deletes all registered members for that specific event
+    await RegistrationModel.deleteMany({ eventId: eventId });
+  }
 }

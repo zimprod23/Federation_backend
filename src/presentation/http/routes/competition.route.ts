@@ -343,6 +343,77 @@ export function competitionRouter(
       }
     },
   );
+  // DELETE /competitions/:id/events/:eventId
+  router.delete(
+    "/:id/events/:eventId",
+    authenticate,
+    requireRole("super_admin", "federation_admin"),
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const { id, eventId } = req.params;
+        validateObjectId(String(id));
+        validateObjectId(String(eventId));
+
+        // 1. Basic check: Ensure competition exists and isn't completed
+        const competition = await competitionRepo.findById(String(id));
+        if (!competition)
+          return res
+            .status(404)
+            .json(ApiResponseBuilder.error("Competition not found"));
+        if (competition.status === CompetitionStatus.COMPLETED) {
+          return res
+            .status(400)
+            .json(
+              ApiResponseBuilder.error(
+                "Cannot delete events of a completed competition",
+              ),
+            );
+        }
+
+        // 2. Direct Repo Calls to clean up children
+        await resultRepo.deleteByEventId(String(eventId));
+        await registrationRepo.deleteByEventId(String(eventId));
+
+        // 3. Delete the event itself
+        await eventRepo.delete(String(eventId));
+
+        res
+          .status(200)
+          .json(
+            ApiResponseBuilder.success(
+              null,
+              "Event and associated data deleted",
+            ),
+          );
+      } catch (err) {
+        next(err);
+      }
+    },
+  );
+  // DELETE /competitions/:id/events/:eventId/results
+  router.delete(
+    "/:id/events/:eventId/results",
+    authenticate,
+    requireRole("super_admin", "federation_admin"),
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const { eventId } = req.params;
+        validateObjectId(String(eventId));
+
+        // Direct call to repository to wipe results for this event
+        // Note: Ensure your IResultRepository has a deleteByEventId method
+        await resultRepo.deleteByEventId(String(eventId));
+
+        res
+          .status(200)
+          .json(
+            ApiResponseBuilder.success(null, "Results cleared for this event"),
+          );
+      } catch (err) {
+        next(err);
+      }
+    },
+  );
 
   return router;
 }

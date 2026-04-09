@@ -90,22 +90,70 @@ export class MongoMemberRepository implements IMemberRepository {
     pagination: PaginationParams,
     filters: MemberFilters,
   ): Promise<PaginatedResult<Member>> {
-    const query: Record<string, unknown> = {};
+    const query: Record<string, any> = {};
 
     if (filters.status) query["status"] = filters.status;
     if (filters.gender) query["gender"] = filters.gender;
     if (filters.clubId) query["clubId"] = filters.clubId;
     if (filters.season) query["season"] = filters.season;
-    if (filters.search) query["$text"] = { $search: filters.search };
 
-    // category is computed from DOB — filter in memory after fetch
-    // for now we skip DB-level category filtering (add later with aggregation)
+    // Change from $text to $or with $regex for partial matching
+    if (filters.search) {
+      const searchRegex = new RegExp(filters.search, "i"); // 'i' for case-insensitive
+      query["$or"] = [
+        { firstName: searchRegex },
+        { lastName: searchRegex },
+        { licenseNumber: searchRegex },
+        { cin: searchRegex }, // Added CIN as it's useful for searching members
+      ];
+    }
+
+    if (filters.category) {
+      const currentYear = new Date().getFullYear();
+      let minYear: number, maxYear: number;
+
+      // Example logic for categories based on birth year
+      switch (filters.category) {
+        case "u15":
+          minYear = currentYear - 14;
+          maxYear = currentYear;
+          break;
+        case "u19":
+          minYear = currentYear - 18;
+          maxYear = currentYear - 15;
+          break;
+        case "junior":
+          minYear = currentYear - 20;
+          maxYear = currentYear - 19;
+          break;
+        case "u23":
+          minYear = currentYear - 22;
+          maxYear = currentYear - 21;
+          break;
+        case "senior":
+          minYear = 1900; // or 0
+          maxYear = currentYear - 23;
+          break;
+        default:
+          minYear = 0;
+          maxYear = 3000;
+      }
+
+      query["dateOfBirth"] = {
+        $gte: new Date(`${minYear}-01-01`),
+        $lte: new Date(`${maxYear}-12-31`),
+      };
+    }
 
     const { page, limit } = pagination;
     const skip = (page - 1) * limit;
 
     const [docs, total] = await Promise.all([
-      MemberModel.find(query).skip(skip).limit(limit).lean(),
+      MemberModel.find(query)
+        .sort({ createdAt: -1 }) // Usually better to see newest first
+        .skip(skip)
+        .limit(limit)
+        .lean(),
       MemberModel.countDocuments(query),
     ]);
 

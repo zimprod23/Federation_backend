@@ -181,6 +181,7 @@ export interface IRegistrationRepository {
     competitionId: string,
   ): Promise<Registration[]>;
   save(registration: Registration): Promise<Registration>;
+  deleteByEventId(eventId: string): Promise<void>;
 }
 
 // ─── IResultRepository ───────────────────────────────────────────────────────
@@ -192,4 +193,5 @@ export interface IResultRepository {
   ): Promise<Result | null>;
   findByCompetitionId(competitionId: string): Promise<Result[]>;
   save(result: Result): Promise<Result>;
+  deleteByEventId(eventId: string): Promise<void>;
 }
