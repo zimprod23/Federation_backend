@@ -9,7 +9,7 @@ export interface CreateMemberDTO {
   lastName: string;
   dateOfBirth: string; // ISO "YYYY-MM-DD"
   gender: Gender;
-  email: string;
+  email?: string;
   phone?: string;
   height?: number;
   cin?: string;
@@ -48,7 +48,7 @@ export interface MemberResponseDTO {
   fullName: string;
   firstName: string;
   lastName: string;
-  email: string;
+  email?: string;
   phone?: string;
   photoUrl?: string;
   height?: number;

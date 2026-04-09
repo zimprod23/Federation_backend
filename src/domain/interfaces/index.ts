@@ -42,6 +42,7 @@ export interface IMemberRepository {
   findById(id: string): Promise<Member | null>;
   findByLicenseNumber(ln: string): Promise<Member | null>;
   findByEmail(email: string): Promise<Member | null>;
+  findByCin(cin: string): Promise<Member | null>;
   findAll(
     pagination: PaginationParams,
     filters: MemberFilters,

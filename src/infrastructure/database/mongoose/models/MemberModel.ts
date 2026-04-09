@@ -7,7 +7,7 @@ export interface IMemberDocument extends Document {
   lastName: string;
   dateOfBirth: Date;
   gender: Gender;
-  email: string;
+  email?: string;
   phone?: string;
   photoUrl?: string;
   height?: number;
@@ -40,12 +40,12 @@ const memberSchema = new Schema<IMemberDocument>(
     },
     email: {
       type: String,
-      required: true,
-      unique: true,
+      required: false, // Changed to false
       trim: true,
       lowercase: true,
+      // Remove unique: true from here, we handle it via index below
     },
-    phone: { type: String, trim: true },
+    phone: { type: String, required: false, trim: true },
     photoUrl: { type: String },
     cin: { type: String, required: false, /*unique: true,*/ trim: true },
     // Physical stats
@@ -74,6 +74,13 @@ memberSchema.index(
   {
     unique: true,
     partialFilterExpression: { cin: { $exists: true, $ne: null } },
+  },
+);
+memberSchema.index(
+  { email: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { email: { $type: "string" } },
   },
 );
 memberSchema.index({ status: 1 });

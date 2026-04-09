@@ -13,7 +13,7 @@ export interface MemberProps {
   lastName: string;
   dateOfBirth: Date;
   gender: Gender;
-  email: string;
+  email?: string;
   phone?: string;
   photoUrl?: string;
   cin?: string;
@@ -35,7 +35,7 @@ export class Member {
   readonly lastName: string;
   readonly dateOfBirth: Date;
   readonly gender: Gender;
-  readonly email: string;
+  readonly email?: string;
   readonly cin?: string;
   readonly phone?: string;
   readonly photoUrl?: string;

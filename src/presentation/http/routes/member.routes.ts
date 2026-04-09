@@ -44,7 +44,7 @@ const createMemberSchema = z.object({
   lastName: z.string().min(1).max(100).trim(),
   dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD format"),
   gender: z.enum(["male", "female"]),
-  email: z.string().email(),
+  email: z.string().email().optional(),
   phone: z.string().optional(),
   height: z.number().min(100).max(250).optional(),
   armSpan: z.number().min(100).max(250).optional(),
@@ -158,7 +158,7 @@ export function memberRouter(
         validateObjectId(String(req.params["id"]));
 
         const dto = validate(updateMemberSchema, req.body);
-        const uc = new UpdateMemberUseCase(memberRepo);
+        const uc = new UpdateMemberUseCase(memberRepo, clubRepo);
         const result = await uc.execute(String(req.params["id"]), dto);
         res
           .status(200)

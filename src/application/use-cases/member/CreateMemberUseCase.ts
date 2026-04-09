@@ -69,8 +69,21 @@ export class CreateMemberUseCase {
   ) {}
 
   async execute(dto: CreateMemberDTO): Promise<MemberResponseDTO> {
-    const existing = await this.memberRepo.findByEmail(dto.email);
-    if (existing) throw new MemberAlreadyExistsError(dto.email);
+    if (dto.email) {
+      const existingEmail = await this.memberRepo.findByEmail(dto.email);
+      if (existingEmail)
+        throw new MemberAlreadyExistsError(
+          `Email ${dto.email} already registered`,
+        );
+    }
+
+    // 2. Check existence by CIN (Only if provided)
+    if (dto.cin) {
+      // Assuming you add findByCin to your repository
+      const existingCin = await this.memberRepo.findByCin(dto.cin);
+      if (existingCin)
+        throw new MemberAlreadyExistsError(`CIN ${dto.cin} already registered`);
+    }
 
     const season = new Date().getFullYear();
     const seq = await this.memberRepo.nextSequence(season);

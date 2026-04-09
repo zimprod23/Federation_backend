@@ -20,8 +20,6 @@ Authorization: Bearer {{token}}
   "lastName": "El alej",
   "dateOfBirth": "2004-02-21",
   "gender": "male",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 176,
   "armSpan": 178,
   "weight": 71
@@ -40,8 +38,6 @@ Authorization: Bearer {{token}}
   "lastName": "El youssoufi",
   "dateOfBirth": "2004-03-10",
   "gender": "male",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 180,
   "armSpan": 178,
   "weight": 70
@@ -59,8 +55,6 @@ Authorization: Bearer {{token}}
   "lastName": "Chafik",
   "dateOfBirth": "2003-12-26",
   "gender": "male",
-  "email": "FRMA2@gmail.com",
-  "phone": "0000000000",
   "height": 176,
   "armSpan": 174,
   "weight": 68

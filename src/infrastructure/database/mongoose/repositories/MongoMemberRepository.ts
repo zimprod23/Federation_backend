@@ -81,6 +81,11 @@ export class MongoMemberRepository implements IMemberRepository {
     return doc ? this.toDomain(doc as IMemberDocument) : null;
   }
 
+  async findByCin(cin: string): Promise<Member | null> {
+    const doc = await MemberModel.findOne({ cin }).lean();
+    return doc ? this.toDomain(doc as IMemberDocument) : null;
+  }
+
   async findAll(
     pagination: PaginationParams,
     filters: MemberFilters,
