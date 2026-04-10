@@ -3,6 +3,7 @@ import {
   MemberStatus,
   MemberCategory,
   computeCategory,
+  PositionType,
 } from "../value-objects";
 import { MemberSuspendedError, MemberExpiredError } from "../errors";
 
@@ -20,6 +21,7 @@ export interface MemberProps {
   height?: number; // cm
   armSpan?: number; // cm
   weight?: number; // kg
+  position?: PositionType;
   status: MemberStatus;
   clubId?: string;
   season: number;
@@ -42,6 +44,7 @@ export class Member {
   readonly height?: number;
   readonly armSpan?: number;
   readonly weight?: number;
+  readonly position?: PositionType;
   readonly status: MemberStatus;
   readonly clubId?: string;
   readonly season: number;
@@ -61,6 +64,7 @@ export class Member {
     this.photoUrl = props.photoUrl;
     this.height = props.height;
     this.armSpan = props.armSpan;
+    this.position = props.position;
     this.weight = props.weight;
     this.status = props.status;
     this.clubId = props.clubId;
@@ -122,6 +126,7 @@ export class Member {
       photoUrl: this.photoUrl,
       height: this.height,
       armSpan: this.armSpan,
+      position: this.position,
       weight: this.weight,
       status: this.status,
       clubId: this.clubId,

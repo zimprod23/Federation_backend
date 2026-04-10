@@ -65,7 +65,8 @@ export class LicenseNumber {
     const paddedSeq = String(sequence).padStart(5, "0");
 
     // Construct: CNPR-26019200001
-    return `${clubShort.toUpperCase()}-${seasonYY}${paddedClubCode}${birthYY}${paddedSeq}`;
+    // return `${clubShort.toUpperCase()}-${seasonYY}${paddedClubCode}${birthYY}${paddedSeq}`;
+    return `${seasonYY}${paddedClubCode}${birthYY}${paddedSeq}`;
   }
 
   static isValid(raw: string): boolean {

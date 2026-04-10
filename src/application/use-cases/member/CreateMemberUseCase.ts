@@ -120,6 +120,7 @@ export class CreateMemberUseCase {
       height: dto.height,
       armSpan: dto.armSpan,
       weight: dto.weight,
+      position: dto.position,
       cin: dto.cin,
       status: MemberStatus.PENDING,
       clubId: dto.clubId,

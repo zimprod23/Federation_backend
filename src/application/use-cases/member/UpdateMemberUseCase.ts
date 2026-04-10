@@ -36,7 +36,7 @@ export class UpdateMemberUseCase {
     const updated = new Member({
       ...member.toProps(),
       ...dto,
-      licenseNumber: newLicense,
+      // licenseNumber: newLicense,
     });
 
     const saved = await this.memberRepo.save(updated);

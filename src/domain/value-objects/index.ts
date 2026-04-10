@@ -56,6 +56,13 @@ export type VerificationResult =
   | "expired"
   | "not_found";
 
+export enum PositionType {
+  Coach = "Coach",
+  Athlete = "Athlete",
+  President = "President",
+  Administrator = "Administrator",
+}
+
 // ─── Competition types ────────────────────────────────────────────────────────
 export enum CompetitionType {
   TEST_FISA = "test_fisa",
@@ -110,7 +117,7 @@ export function computeCategory(
   const exactAge = hasBirthdayPassed ? age : age - 1;
 
   if (exactAge < 15) return MemberCategory.U15;
-  if (exactAge < 19) return MemberCategory.U19;
+  if (exactAge < 19) return MemberCategory.JUNIOR;
   if (exactAge < 23) return MemberCategory.U23;
   return MemberCategory.SENIOR;
 }

@@ -23,6 +23,7 @@ import {
   MemberCategory,
   MemberLevel,
   MemberStatus,
+  PositionType,
 } from "../../../domain/value-objects";
 import { validateObjectId } from "../../../shared/mongoose.utils";
 
@@ -48,6 +49,7 @@ const createMemberSchema = z.object({
   phone: z.string().optional(),
   height: z.number().min(100).max(250).optional(),
   armSpan: z.number().min(100).max(250).optional(),
+  position: z.nativeEnum(PositionType).optional(),
   cin: z.string().min(1).max(20).trim().optional(),
   weight: z.number().min(30).max(200).optional(),
   clubId: z.string().optional(),
@@ -64,6 +66,7 @@ const updateMemberSchema = z
     cin: z.string().min(1).max(20).trim().optional(),
     clubId: z.string().optional(),
     status: z.nativeEnum(MemberStatus).optional(),
+    position: z.nativeEnum(PositionType).optional(),
   })
   .strict();
 

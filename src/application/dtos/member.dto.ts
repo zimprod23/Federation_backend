@@ -2,6 +2,7 @@ import {
   Gender,
   MemberCategory,
   MemberStatus,
+  PositionType,
 } from "../../domain/value-objects";
 
 export interface CreateMemberDTO {
@@ -11,6 +12,7 @@ export interface CreateMemberDTO {
   gender: Gender;
   email?: string;
   phone?: string;
+  position?: PositionType;
   height?: number;
   cin?: string;
   armSpan?: number;
@@ -28,6 +30,7 @@ export interface UpdateMemberDTO {
   weight?: number;
   clubId?: string;
   status?: MemberStatus;
+  position?: PositionType;
 }
 
 export interface ListMembersDTO {
@@ -54,6 +57,7 @@ export interface MemberResponseDTO {
   height?: number;
   dateOfBirth?: string;
   armSpan?: number;
+  position?: string;
   weight?: number;
   cin?: string;
   gender: Gender;

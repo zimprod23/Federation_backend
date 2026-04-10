@@ -1,5 +1,9 @@
 import { model, Schema, Document } from "mongoose";
-import { Gender, MemberStatus } from "../../../../domain/value-objects";
+import {
+  Gender,
+  MemberStatus,
+  PositionType,
+} from "../../../../domain/value-objects";
 
 export interface IMemberDocument extends Document {
   licenseNumber: string;
@@ -13,6 +17,7 @@ export interface IMemberDocument extends Document {
   height?: number;
   armSpan?: number;
   weight?: number;
+  position?: PositionType;
   cin?: string;
   status: MemberStatus;
   clubId?: Schema.Types.ObjectId;
@@ -38,6 +43,13 @@ const memberSchema = new Schema<IMemberDocument>(
       required: true,
       enum: ["male", "female"],
     },
+    position: {
+      type: String,
+      required: false,
+      enum: Object.values(PositionType),
+      default: PositionType.Athlete,
+    },
+
     email: {
       type: String,
       required: false, // Changed to false

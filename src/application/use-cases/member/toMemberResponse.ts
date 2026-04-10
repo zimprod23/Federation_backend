@@ -14,6 +14,7 @@ export function toMemberResponse(member: Member): MemberResponseDTO {
     height: member.height,
     armSpan: member.armSpan,
     weight: member.weight,
+    position: member.position,
     gender: member.gender,
     cin: member.cin,
     dateOfBirth: member.dateOfBirth?.toISOString(),

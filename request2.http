@@ -2,7 +2,7 @@
 @contentType = application/json
 
 # ── After login, paste the token here ────────────────────────────────────────
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ1NzFkNGZlMTU1NDVjOTE5NmNhYTYiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzU3NjM5MTYsImV4cCI6MTc3NTg1MDMxNn0.Z_YwS3FNsVAlbRdRKyn4dxojeNtO9LP6My0OrmIolUY
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ0Y2U5MThlZTMwYjA0YTk3OWIwZGQiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzU4MTMwNDcsImV4cCI6MTc3NTg5OTQ0N30.FU1gNmnS5Y6ZJV8SpbpX9xhmsYktjnUBIvmo5YZIN8s
 @qrToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6IjY5ZDU3MzQ4MzIyMjEzZjdkMDljMDFkYSIsImxpY2Vuc2VOdW1iZXIiOiJDTlBSWFhZL1BSMDAxIiwic2Vhc29uIjoyMDI2LCJpYXQiOjE3NzU1OTY5MjR9.XMuZ7MYLchU_07srWQeukJ9dandj-OMCofQjZ84f2_Y
 @clubId = 69d4f3e9d30098314bad0bb4
 ###
@@ -93,6 +93,7 @@ Authorization: Bearer {{token}}
   "height": 177,
   "armSpan": 178,
   "weight": 70
+  
 }
 
 ###
@@ -107,11 +108,9 @@ Authorization: Bearer {{token}}
   "lastName": "Boufrir",
   "dateOfBirth": "2006-01-20",
   "gender": "male",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 180,
   "armSpan": 180,
-  "weight": 80,
+  "weight": 80
   
 }
 
@@ -127,11 +126,10 @@ Authorization: Bearer {{token}}
   "lastName": "Ibrahimi",
   "dateOfBirth": "2005-07-17",
   "gender": "male",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
+
   "height": 176,
   "armSpan": 175,
-  "weight": 66,
+  "weight": 66
   
 }
 
@@ -147,11 +145,9 @@ Authorization: Bearer {{token}}
   "lastName": "Chafik",
   "dateOfBirth": "2006-04-22",
   "gender": "male",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 178,
   "armSpan": 178,
-  "weight": 72,
+  "weight": 72
   
 }
 
@@ -167,11 +163,10 @@ Authorization: Bearer {{token}}
   "lastName": "Hajjaji",
   "dateOfBirth": "2006-05-28",
   "gender": "male",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
+
   "height": 178,
   "armSpan": 176,
-  "weight": 72,
+  "weight": 72
   
 }
 
@@ -187,11 +182,10 @@ Authorization: Bearer {{token}}
   "lastName": "Sabri",
   "dateOfBirth": "2004-10-14",
   "gender": "male",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
+
   "height": 188,
   "armSpan": 186,
-  "weight": 85,
+  "weight": 85
   
 }
 
@@ -207,11 +201,10 @@ Authorization: Bearer {{token}}
   "lastName": "Errioui",
   "dateOfBirth": "2009-07-24",
   "gender": "male",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
+
   "height": 174,
   "armSpan": 172,
-  "weight": 72,
+  "weight": 72
   
 }
 
@@ -227,11 +220,10 @@ Authorization: Bearer {{token}}
   "lastName": "Echchalfi",
   "dateOfBirth": "2009-04-03",
   "gender": "male",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
+
   "height": 174,
   "armSpan": 172,
-  "weight": 68,
+  "weight": 68
   
 }
 
@@ -247,11 +239,10 @@ Authorization: Bearer {{token}}
   "lastName": "Nabioui",
   "dateOfBirth": "2007-12-18",
   "gender": "male",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
+
   "height": 168,
   "armSpan": 166,
-  "weight": 66,
+  "weight": 66
   
 }
 
@@ -267,11 +258,9 @@ Authorization: Bearer {{token}}
   "lastName": "Bachnikha",
   "dateOfBirth": "2007-07-04",
   "gender": "male",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
-  "height": null,
-  "armSpan": null,
-  "weight": null,
+  "height": 170,
+  "armSpan": 170,
+  "weight": 65
   
 }
 
@@ -287,11 +276,10 @@ Authorization: Bearer {{token}}
   "lastName": "Zara Debray",
   "dateOfBirth": "1998-09-17",
   "gender": "female",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
+
   "height": 165,
   "armSpan": 165,
-  "weight": 68.5,
+  "weight": 68.5
   
 }
 
@@ -307,11 +295,10 @@ Authorization: Bearer {{token}}
   "lastName": "EL Alaoui",
   "dateOfBirth": "2001-01-23",
   "gender": "female",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
+
   "height": 165,
   "armSpan": 164,
-  "weight": 58,
+  "weight": 58
   
 }
 
@@ -327,11 +314,10 @@ Authorization: Bearer {{token}}
   "lastName": "Jabbour",
   "dateOfBirth": "2004-01-05",
   "gender": "female",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
+
   "height": 168,
   "armSpan": 166,
-  "weight": 66,
+  "weight": 66
   
 }
 
@@ -347,11 +333,9 @@ Authorization: Bearer {{token}}
   "lastName": "Nkiri",
   "dateOfBirth": "2006-11-23",
   "gender": "female",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 168,
   "armSpan": 166,
-  "weight": 64,
+  "weight": 64
   
 }
 
@@ -367,11 +351,9 @@ Authorization: Bearer {{token}}
   "lastName": "Daoudi",
   "dateOfBirth": "2007-01-01",
   "gender": "female",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 166,
   "armSpan": 163,
-  "weight": 58,
+  "weight": 58
   
 }
 
@@ -387,11 +369,9 @@ Authorization: Bearer {{token}}
   "lastName": "Ghazaz",
   "dateOfBirth": "2004-02-23",
   "gender": "female",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 167,
   "armSpan": 166,
-  "weight": 61,
+  "weight": 61
   
 }
 
@@ -407,11 +387,9 @@ Authorization: Bearer {{token}}
   "lastName": "Moustakim",
   "dateOfBirth": "2008-06-10",
   "gender": "female",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 166,
   "armSpan": 164,
-  "weight": 65,
+  "weight": 65
   
 }
 
@@ -427,11 +405,9 @@ Authorization: Bearer {{token}}
   "lastName": "Jabbour",
   "dateOfBirth": "2008-06-25",
   "gender": "female",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 168,
   "armSpan": 166,
-  "weight": 64,
+  "weight": 64
   
 }
 
@@ -447,11 +423,10 @@ Authorization: Bearer {{token}}
   "lastName": "Lamjid",
   "dateOfBirth": "2010-01-16",
   "gender": "female",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
+
   "height": 170,
   "armSpan": 169,
-  "weight": 65,
+  "weight": 65
   
 }
 
@@ -467,11 +442,9 @@ Authorization: Bearer {{token}}
   "lastName": "El homa",
   "dateOfBirth": "2009-01-13",
   "gender": "female",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 168,
   "armSpan": 166,
-  "weight": 62,
+  "weight": 62
   
 }
 
@@ -485,13 +458,11 @@ Authorization: Bearer {{token}}
 {
   "firstName": "Aya",
   "lastName": "Raiss",
-  "dateOfBirth": null,
+  "dateOfBirth": "2008-01-13",
   "gender": "female",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 166,
   "armSpan": 164,
-  "weight": 68,
+  "weight": 68
   
 }
 
@@ -507,11 +478,9 @@ Authorization: Bearer {{token}}
   "lastName": "Alila",
   "dateOfBirth": "2007-02-26",
   "gender": "female",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 167,
   "armSpan": 164,
-  "weight": 66,
+  "weight": 66
   
 }
 
@@ -527,11 +496,9 @@ Authorization: Bearer {{token}}
   "lastName": "Chmandri",
   "dateOfBirth": "2009-12-26",
   "gender": "female",
-  "email": "FRMA@gmail.com",
-  "phone": "0000000000",
   "height": 168,
   "armSpan": 166,
-  "weight": 65,
+  "weight": 65
   
 }
 

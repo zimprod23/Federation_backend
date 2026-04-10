@@ -10,6 +10,7 @@ import {
   Gender,
   MemberLevel,
   MemberStatus,
+  PositionType,
 } from "../../../../domain/value-objects";
 import { MemberModel, IMemberDocument } from "../models/MemberModel";
 import { CounterModel } from "../models/CounterModel";
@@ -30,6 +31,7 @@ export class MongoMemberRepository implements IMemberRepository {
       armSpan: doc.armSpan,
       weight: doc.weight,
       cin: doc.cin,
+      position: doc.position as PositionType,
       // disciplines: doc.disciplines as Discipline[],
       // level: doc.level as MemberLevel,
       status: doc.status as MemberStatus,
@@ -53,6 +55,7 @@ export class MongoMemberRepository implements IMemberRepository {
       photoUrl: member.photoUrl,
       height: member.height,
       armSpan: member.armSpan,
+      position: member.position,
       weight: member.weight,
       cin: member.cin,
       // disciplines: member.disciplines,

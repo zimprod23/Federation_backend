@@ -2,7 +2,7 @@
 @contentType = application/json
 
 # ── After login, paste the token here ────────────────────────────────────────
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ1NzFkNGZlMTU1NDVjOTE5NmNhYTYiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzU3NjM5MTYsImV4cCI6MTc3NTg1MDMxNn0.Z_YwS3FNsVAlbRdRKyn4dxojeNtO9LP6My0OrmIolUY
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ0Y2U5MThlZTMwYjA0YTk3OWIwZGQiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzU4MTMwNDcsImV4cCI6MTc3NTg5OTQ0N30.FU1gNmnS5Y6ZJV8SpbpX9xhmsYktjnUBIvmo5YZIN8s
 @qrToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6IjY5ZDgwMjM0MDBjYmNkYTc0NjM1YzI2NSIsImxpY2Vuc2VOdW1iZXIiOiJDTlBSLTI2MDEwMTAwMDA0Iiwic2Vhc29uIjoyMDI2LCJpYXQiOjE3NzU3NjQ0OTF9.KSUCkRl6WPGW4qoI5GzvKx45V4cxHbf-ifN3rFhFLBE
 @clubId = 69d4f3e9d30098314bad0bb4
 ###
@@ -120,13 +120,11 @@ Authorization: Bearer {{token}}
   "lastName":    "Benali1",
   "dateOfBirth": "2004-03-10",
   "gender":      "male",
-  "email":       "youssef.benali1@gmail.com",
-  "phone":       "+2126000000024",
+  "position": "Coach",
   "height":      180,
   "armSpan":     178,
-  "weight":      70,
-  "clubId":      "{{clubId}}"
-}
+  "weight":      70
+  }
 
 ###
 
