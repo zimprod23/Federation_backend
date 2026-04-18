@@ -12,6 +12,8 @@ export interface MemberProps {
   licenseNumber: string;
   firstName: string;
   lastName: string;
+  firstNameAr: string;
+  lastNameAr: string;
   dateOfBirth: Date;
   gender: Gender;
   email?: string;
@@ -35,6 +37,8 @@ export class Member {
   readonly licenseNumber: string;
   readonly firstName: string;
   readonly lastName: string;
+  readonly firstNameAr: string;
+  readonly lastNameAr: string;
   readonly dateOfBirth: Date;
   readonly gender: Gender;
   readonly email?: string;
@@ -57,6 +61,8 @@ export class Member {
     this.licenseNumber = props.licenseNumber;
     this.firstName = props.firstName;
     this.lastName = props.lastName;
+    this.firstNameAr = props.firstNameAr;
+    this.lastNameAr = props.lastNameAr;
     this.dateOfBirth = props.dateOfBirth;
     this.gender = props.gender;
     this.email = props.email;
@@ -78,6 +84,9 @@ export class Member {
   // ─── Computed ────────────────────────────────────────────────────────────────
   get fullName(): string {
     return `${this.firstName} ${this.lastName}`;
+  }
+  get fullNameAr(): string {
+    return `${this.firstNameAr} ${this.lastNameAr}`;
   }
 
   // Category is always computed from DOB, never stored
@@ -119,6 +128,8 @@ export class Member {
       licenseNumber: this.licenseNumber,
       firstName: this.firstName,
       lastName: this.lastName,
+      firstNameAr: this.firstNameAr,
+      lastNameAr: this.lastNameAr,
       dateOfBirth: this.dateOfBirth,
       gender: this.gender,
       email: this.email,

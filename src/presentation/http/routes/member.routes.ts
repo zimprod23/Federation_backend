@@ -17,6 +17,7 @@ import {
   UpdateMemberUseCase,
   UploadMemberPhotoUseCase,
   DeleteMemberUseCase,
+  AdjustLicenseNumberUseCase,
 } from "../../../application/use-cases/member";
 import {
   Discipline,
@@ -43,6 +44,8 @@ const upload = multer({
 const createMemberSchema = z.object({
   firstName: z.string().min(1).max(100).trim(),
   lastName: z.string().min(1).max(100).trim(),
+  firstNameAr: z.string().min(1).max(100).trim(),
+  lastNameAr: z.string().min(1).max(100).trim(),
   dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD format"),
   gender: z.enum(["male", "female"]),
   email: z.string().email().optional(),
@@ -59,6 +62,12 @@ const updateMemberSchema = z
   .object({
     firstName: z.string().min(1).max(100).trim().optional(),
     lastName: z.string().min(1).max(100).trim().optional(),
+    firstNameAr: z.string().min(1).max(100).trim().optional(),
+    lastNameAr: z.string().min(1).max(100).trim().optional(),
+    dateOfBirth: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD format")
+      .optional(),
     phone: z.string().optional(),
     height: z.number().min(100).max(250).optional(),
     armSpan: z.number().min(100).max(250).optional(),
@@ -81,6 +90,12 @@ const listMembersSchema = z.object({
   season: z.coerce.number().optional(),
   search: z.string().optional(),
 });
+
+const adjustLicenseNumberSchema = z.object({
+  clubId: z.string().optional(),
+  season: z.coerce.number().optional(),
+});
+
 export function memberRouter(
   memberRepo: IMemberRepository,
   clubRepo: IClubRepository,
@@ -145,6 +160,30 @@ export function memberRouter(
         const uc = new GetMemberUseCase(memberRepo);
         const result = await uc.execute(String(req.params["id"]));
         res.status(200).json(ApiResponseBuilder.success(result));
+      } catch (err) {
+        next(err);
+      }
+    },
+  );
+
+  // POST /members/adjust-license
+  router.post(
+    "/adjust-license",
+    authenticate,
+    requireRole("super_admin", "federation_admin"),
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const dto = validate(adjustLicenseNumberSchema, req.query);
+        const uc = new AdjustLicenseNumberUseCase(memberRepo, clubRepo);
+        const result = await uc.execute(dto);
+        res
+          .status(200)
+          .json(
+            ApiResponseBuilder.success(
+              result,
+              `License numbers adjusted for ${result.adjustedCount} members`,
+            ),
+          );
       } catch (err) {
         next(err);
       }

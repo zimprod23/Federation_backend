@@ -61,12 +61,13 @@ export class LicenseNumber {
     const birthDate = new Date(dateOfBirth);
     const birthYY = String(birthDate.getFullYear()).slice(-2);
 
-    // 4. Pad sequence to 5 digits
-    const paddedSeq = String(sequence).padStart(5, "0");
+    // 4. Pad sequence to 4 digits
+    const paddedSeq = String(sequence).padStart(4, "0");
 
     // Construct: CNPR-26019200001
     // return `${clubShort.toUpperCase()}-${seasonYY}${paddedClubCode}${birthYY}${paddedSeq}`;
-    return `${seasonYY}${paddedClubCode}${birthYY}${paddedSeq}`;
+    // return `${seasonYY}${paddedClubCode}${birthYY}${paddedSeq}`;
+    return `${paddedClubCode}${paddedSeq}`;
   }
 
   static isValid(raw: string): boolean {

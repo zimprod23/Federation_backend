@@ -8,6 +8,8 @@ import {
 export interface CreateMemberDTO {
   firstName: string;
   lastName: string;
+  firstNameAr: string;
+  lastNameAr: string;
   dateOfBirth: string; // ISO "YYYY-MM-DD"
   gender: Gender;
   email?: string;
@@ -23,6 +25,9 @@ export interface CreateMemberDTO {
 export interface UpdateMemberDTO {
   firstName?: string;
   lastName?: string;
+  firstNameAr?: string;
+  lastNameAr?: string;
+  dateOfBirth?: string; // ISO "YYYY
   phone?: string;
   height?: number;
   armSpan?: number;
@@ -49,8 +54,11 @@ export interface MemberResponseDTO {
   id: string;
   licenseNumber: string;
   fullName: string;
+  fullNameAr: string;
   firstName: string;
   lastName: string;
+  firstNameAr: string;
+  lastNameAr: string;
   email?: string;
   phone?: string;
   photoUrl?: string;

@@ -36,6 +36,9 @@ export class UpdateMemberUseCase {
     const updated = new Member({
       ...member.toProps(),
       ...dto,
+      dateOfBirth: dto.dateOfBirth
+        ? new Date(dto.dateOfBirth)
+        : member.dateOfBirth,
       // licenseNumber: newLicense,
     });
 
