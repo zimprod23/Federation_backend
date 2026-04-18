@@ -172,6 +172,7 @@ export interface IEventRepository {
 export interface IRegistrationRepository {
   findById(id: string): Promise<Registration | null>;
   findByEventId(eventId: string): Promise<Registration[]>;
+  findByMemberId(memberId: string): Promise<Registration[]>;
   findByMemberAndEvent(
     memberId: string,
     eventId: string,

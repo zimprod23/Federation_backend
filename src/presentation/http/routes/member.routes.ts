@@ -9,10 +9,14 @@ import {
   IClubRepository,
   IMemberRepository,
   IStorageService,
+  ICompetitionRepository,
+  IRegistrationRepository,
+  IResultRepository,
 } from "../../../domain/interfaces";
 import {
   CreateMemberUseCase,
   GetMemberUseCase,
+  GetMemberHistoryUseCase,
   ListMembersUseCase,
   UpdateMemberUseCase,
   UploadMemberPhotoUseCase,
@@ -101,6 +105,9 @@ export function memberRouter(
   clubRepo: IClubRepository,
   storageService: IStorageService,
   authTokenSvc: IAuthTokenService,
+  competitionRepo: ICompetitionRepository,
+  registrationRepo: IRegistrationRepository,
+  resultRepo: IResultRepository,
 ): Router {
   const router = Router();
   const authenticate = createAuthenticate(authTokenSvc);
@@ -158,6 +165,28 @@ export function memberRouter(
         validateObjectId(String(req.params["id"]));
 
         const uc = new GetMemberUseCase(memberRepo);
+        const result = await uc.execute(String(req.params["id"]));
+        res.status(200).json(ApiResponseBuilder.success(result));
+      } catch (err) {
+        next(err);
+      }
+    },
+  );
+
+  // GET /members/:id/history
+  router.get(
+    "/:id/history",
+    authenticate,
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        validateObjectId(String(req.params["id"]));
+
+        const uc = new GetMemberHistoryUseCase(
+          memberRepo,
+          registrationRepo,
+          competitionRepo,
+          resultRepo,
+        );
         const result = await uc.execute(String(req.params["id"]));
         res.status(200).json(ApiResponseBuilder.success(result));
       } catch (err) {

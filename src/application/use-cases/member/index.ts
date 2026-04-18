@@ -1,5 +1,6 @@
 export { CreateMemberUseCase } from "./CreateMemberUseCase";
 export { GetMemberUseCase } from "./GetMemberUseCase";
+export { GetMemberHistoryUseCase } from "./GetMemberHistoryUseCase";
 export { ListMembersUseCase } from "./ListMembersUseCase";
 export { UpdateMemberUseCase } from "./UpdateMemberUseCase";
 export { UploadMemberPhotoUseCase } from "./UploadMemberPhotoUseCase";

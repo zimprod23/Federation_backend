@@ -75,3 +75,42 @@ export interface MemberResponseDTO {
   clubId?: string;
   createdAt?: Date;
 }
+
+// ─── Member Competition History ───────────────────────────────────────────────
+export interface CompetitionResultDTO {
+  resultId: string;
+  eventId: string;
+  rank?: number;
+  medal?: "gold" | "silver" | "bronze"; // awarded based on rank
+  finalTime?: string;
+  splitTime500?: string;
+  strokeRate?: number;
+  heartRate?: number;
+  watts?: number;
+  notes?: string;
+}
+
+export interface CompetitionHistoryItemDTO {
+  competitionId: string;
+  competitionName: string;
+  competitionType: string;
+  competitionStatus: string;
+  location: string;
+  city: string;
+  startDate: Date;
+  endDate: Date;
+  season: number;
+  description?: string;
+  results: CompetitionResultDTO[];
+}
+
+export interface MemberHistoryDTO {
+  memberId: string;
+  licenseNumber: string;
+  fullName: string;
+  totalCompetitions: number;
+  goldMedals: number;
+  silverMedals: number;
+  bronzeMedals: number;
+  competitionHistory: CompetitionHistoryItemDTO[];
+}

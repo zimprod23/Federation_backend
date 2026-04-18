@@ -185,6 +185,13 @@ Authorization: Bearer {{token}}
 
 ###
 
+### Get member History by ID
+GET {{baseUrl}}/api/v1/members/69d91b302721524d82ee3f48/history
+Authorization: Bearer {{token}}
+
+###
+
+
 ### Update member status to active
 PATCH {{baseUrl}}/api/v1/members/69d4f428d30098314bad0bb6
 Content-Type: {{contentType}}

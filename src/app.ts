@@ -93,7 +93,15 @@ export async function createApp() {
   app.use("/api/v1/auth", authRouter(userRepo, passwordHasher, authTokenSvc));
   app.use(
     "/api/v1/members",
-    memberRouter(memberRepo, clubRepo, storageService, authTokenSvc),
+    memberRouter(
+      memberRepo,
+      clubRepo,
+      storageService,
+      authTokenSvc,
+      competitionRepo,
+      registrationRepo,
+      resultRepo,
+    ),
   );
   app.use("/api/v1/clubs", clubRouter(clubRepo, authTokenSvc));
   app.use(
