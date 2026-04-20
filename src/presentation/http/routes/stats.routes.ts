@@ -95,7 +95,6 @@
 
 //   return router;
 // }
-
 import { Router, Request, Response, NextFunction } from "express";
 import { createAuthenticate } from "../middleware/authenticate";
 import { ApiResponseBuilder } from "../../../shared/api-response";
@@ -113,7 +112,36 @@ export function statsRouter(authTokenSvc: IAuthTokenService): Router {
       try {
         const db = DB.conn;
 
-        // 1. Members grouped by status
+        /**
+         * 1. DYNAMIC CATEGORIES
+         * Using a CTE to ensure grouping happens on clean strings.
+         * You can add as many WHEN clauses here as you need.
+         */
+        const membersByCategory = db
+          .prepare(
+            `
+          WITH CalculatedCategories AS (
+            SELECT 
+              CASE 
+                WHEN (strftime('%Y', 'now') - strftime('%Y', date_of_birth)) < 15 THEN 'u15'
+                WHEN (strftime('%Y', 'now') - strftime('%Y', date_of_birth)) < 18 THEN 'junior'
+                WHEN (strftime('%Y', 'now') - strftime('%Y', date_of_birth)) < 23 THEN 'u23'
+                ELSE 'senior'
+              END as cat_id
+            FROM members
+          )
+          SELECT cat_id as id, COUNT(*) as count
+          FROM CalculatedCategories
+          GROUP BY cat_id
+          ORDER BY count DESC
+        `,
+          )
+          .all() as { id: string; count: number }[];
+
+        /**
+         * 2. DYNAMIC STATUS & GENDER
+         * These use simple GROUP BY as the values are stored directly in columns.
+         */
         const membersByStatus = db
           .prepare(
             `
@@ -124,25 +152,6 @@ export function statsRouter(authTokenSvc: IAuthTokenService): Router {
           )
           .all() as { id: string; count: number }[];
 
-        // 2. Members grouped by category (computed via age)
-        // Note: strftime('%Y') - strftime('%Y', date_of_birth) provides the age in years
-        const membersByCategory = db
-          .prepare(
-            `
-          SELECT 
-            CASE 
-              WHEN (strftime('%Y', 'now') - strftime('%Y', date_of_birth)) < 18 THEN 'junior'
-              WHEN (strftime('%Y', 'now') - strftime('%Y', date_of_birth)) < 23 THEN 'u23'
-              ELSE 'senior'
-            END as id,
-            COUNT(*) as count
-          FROM members
-          GROUP BY id
-        `,
-          )
-          .all() as { id: string; count: number }[];
-
-        // 3. Members grouped by gender
         const membersByGender = db
           .prepare(
             `
@@ -153,27 +162,32 @@ export function statsRouter(authTokenSvc: IAuthTokenService): Router {
           )
           .all() as { id: string; count: number }[];
 
-        // 4. Individual Totals
-        const totalMembers = db
-          .prepare("SELECT COUNT(*) as count FROM members")
-          .get() as { count: number };
-        const totalClubs = db
+        /**
+         * 3. GLOBAL TOTALS
+         * Combined into one query for optimal performance.
+         */
+        const totals = db
           .prepare(
-            "SELECT COUNT(*) as count FROM clubs WHERE status = 'active'",
+            `
+          SELECT 
+            (SELECT COUNT(*) FROM members) as members,
+            (SELECT COUNT(*) FROM clubs WHERE status = 'active') as activeClubs,
+            (SELECT COUNT(*) FROM competitions WHERE status = 'open') as openCompetitions
+        `,
           )
-          .get() as { count: number };
-        const totalCompetitions = db
-          .prepare(
-            "SELECT COUNT(*) as count FROM competitions WHERE status = 'open'",
-          )
-          .get() as { count: number };
+          .get() as {
+          members: number;
+          activeClubs: number;
+          openCompetitions: number;
+        };
 
+        // --- Response Mapping ---
         res.status(200).json(
           ApiResponseBuilder.success({
             totals: {
-              members: totalMembers.count,
-              activeClubs: totalClubs.count,
-              openCompetitions: totalCompetitions.count,
+              members: totals.members,
+              activeClubs: totals.activeClubs,
+              openCompetitions: totals.openCompetitions,
             },
             membersByStatus: membersByStatus.map((d) => ({
               status: d.id,
@@ -190,6 +204,7 @@ export function statsRouter(authTokenSvc: IAuthTokenService): Router {
           }),
         );
       } catch (err) {
+        // Pass to global error handler
         next(err);
       }
     },
