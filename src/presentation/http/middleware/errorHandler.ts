@@ -106,6 +106,39 @@ export function errorHandler(
     return;
   }
 
+  // ── SQLite Error Handling (better-sqlite3) ────────────────────────────────
+  if (err.constructor.name === "SqliteError") {
+    const sqliteErr = err as any;
+
+    // 1. Unique Constraint (Duplicate entries like Email, CIN, or License)
+    if (sqliteErr.code === "SQLITE_CONSTRAINT_UNIQUE") {
+      const httpErr = new ConflictError(
+        "A record with this information already exists.",
+      );
+      res.status(httpErr.statusCode).json(httpErr.toResponse());
+      return;
+    }
+
+    // 2. Foreign Key Constraint (Referencing a non-existent Club or Member)
+    if (sqliteErr.code === "SQLITE_CONSTRAINT_FOREIGNKEY") {
+      const httpErr = new ValidationError(
+        "The referenced related record was not found.",
+      );
+      res.status(httpErr.statusCode).json(httpErr.toResponse());
+      return;
+    }
+
+    // 3. Generic Database Error (Logs the technical details but hides them from the user)
+    logger.error(
+      `SQLite Database Error: ${sqliteErr.message}`,
+      "ErrorHandler",
+      sqliteErr.stack,
+    );
+    const httpErr = new InternalError("A database error occurred.");
+    res.status(httpErr.statusCode).json(httpErr.toResponse());
+    return;
+  }
+
   // ── Domain errors ──────────────────────────────────────────────────────────
   if (err instanceof DomainError) {
     const httpErr = mapDomainError(err);

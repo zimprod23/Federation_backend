@@ -9,6 +9,7 @@ const configSchema = z.object({
   PORT: z.coerce.number().int().min(1).max(65535).default(3000),
 
   MONGO_URI: z.string().min(1, "MONGO_URI is required"),
+  SQLITE_PATH: z.string().min(1, "SQLITE_PATH is required"),
 
   JWT_SECRET: z.string().min(32, "JWT_SECRET must be at least 32 characters"),
 
@@ -32,6 +33,12 @@ let _config: Config | undefined;
 
 export function initConfig(): Config {
   const result = configSchema.safeParse(process.env);
+  console.log("\n[Config] Loaded environment variables:");
+  if (result.success) {
+    Object.entries(result.data).forEach(([key, value]) => {
+      console.log(`  • ${key}=${value}`);
+    });
+  }
 
   if (!result.success) {
     console.error("\n[Config] ❌  Invalid environment variables:\n");

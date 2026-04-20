@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import { getConfig } from "./shared/config";
-import { connectDatabase } from "./infrastructure/database/connection";
+import { connectDatabase, DB } from "./infrastructure/database/connection";
 import { errorHandler } from "./presentation/http/middleware/errorHandler";
 import { apiLimiter } from "./presentation/http/middleware/rateLimiter";
 
@@ -33,24 +33,33 @@ import { MongoRegistrationRepository } from "./infrastructure/database/mongoose/
 import { MongoResultRepository } from "./infrastructure/database/mongoose/repositories/MongoResultRepository";
 import { competitionRouter } from "./presentation/http/routes/competition.route";
 import { statsRouter } from "./presentation/http/routes/stats.routes";
+import { SqliteMemberRepository } from "./infrastructure/database/sqlite/repositories/SqliteMemberRepository";
+import { SqliteClubRepository } from "./infrastructure/database/sqlite/repositories/SqliteClubRepository";
+import { SqliteUserRepository } from "./infrastructure/database/sqlite/repositories/SqliteUserRepository";
+import { SqliteCardRepository } from "./infrastructure/database/sqlite/repositories/SqliteCardRepository";
+import { SqliteCompetitionRepository } from "./infrastructure/database/sqlite/repositories/SqliteCompetitionRespository";
+import { SqliteVerificationLogRepository } from "./infrastructure/database/sqlite/repositories/SqliteVerificationLogRepository";
+import { SqliteResultRepository } from "./infrastructure/database/sqlite/repositories/SqliteResultRepository";
+import { SqliteEventRepository } from "./infrastructure/database/sqlite/repositories/SqliteEventRepository";
+import { SqliteRegistrationRepository } from "./infrastructure/database/sqlite/repositories/SqliteRegistrationRepository";
 
 export async function createApp() {
   const cfg = getConfig();
 
   // ── Database ─────────────────────────────────────────────────────────────────
-  await connectDatabase(cfg.MONGO_URI);
+  await connectDatabase(cfg.SQLITE_PATH);
 
   // ── Repositories ─────────────────────────────────────────────────────────────
-  const memberRepo = new MongoMemberRepository();
-  const clubRepo = new MongoClubRepository();
-  const userRepo = new MongoUserRepository();
-  const cardRepo = new MongoCardRepository();
-  const verificationRepo = new MongoVerificationLogRepository();
+  const memberRepo = new SqliteMemberRepository(DB.conn);
+  const clubRepo = new SqliteClubRepository(DB.conn);
+  const userRepo = new SqliteUserRepository(DB.conn);
+  const cardRepo = new SqliteCardRepository(DB.conn);
+  const verificationRepo = new SqliteVerificationLogRepository(DB.conn);
 
-  const competitionRepo = new MongoCompetitionRepository();
-  const eventRepo = new MongoEventRepository();
-  const registrationRepo = new MongoRegistrationRepository();
-  const resultRepo = new MongoResultRepository();
+  const competitionRepo = new SqliteCompetitionRepository(DB.conn);
+  const eventRepo = new SqliteEventRepository(DB.conn);
+  const registrationRepo = new SqliteRegistrationRepository(DB.conn);
+  const resultRepo = new SqliteResultRepository(DB.conn);
 
   // ── Services ─────────────────────────────────────────────────────────────────
   const passwordHasher = new BcryptPasswordHasher();
@@ -101,7 +110,7 @@ export async function createApp() {
       competitionRepo,
       registrationRepo,
       resultRepo,
-      eventRepo
+      eventRepo,
     ),
   );
   app.use("/api/v1/clubs", clubRouter(clubRepo, authTokenSvc));
