@@ -12,6 +12,7 @@ import {
   ICompetitionRepository,
   IRegistrationRepository,
   IResultRepository,
+  IEventRepository
 } from "../../../domain/interfaces";
 import {
   CreateMemberUseCase,
@@ -108,6 +109,7 @@ export function memberRouter(
   competitionRepo: ICompetitionRepository,
   registrationRepo: IRegistrationRepository,
   resultRepo: IResultRepository,
+  eventRepo: IEventRepository
 ): Router {
   const router = Router();
   const authenticate = createAuthenticate(authTokenSvc);
@@ -186,6 +188,7 @@ export function memberRouter(
           registrationRepo,
           competitionRepo,
           resultRepo,
+          eventRepo
         );
         const result = await uc.execute(String(req.params["id"]));
         res.status(200).json(ApiResponseBuilder.success(result));

@@ -101,6 +101,7 @@ export async function createApp() {
       competitionRepo,
       registrationRepo,
       resultRepo,
+      eventRepo
     ),
   );
   app.use("/api/v1/clubs", clubRouter(clubRepo, authTokenSvc));

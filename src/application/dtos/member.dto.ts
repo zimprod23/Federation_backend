@@ -1,4 +1,5 @@
 import {
+  EventDistance,
   Gender,
   MemberCategory,
   MemberStatus,
@@ -82,6 +83,8 @@ export interface CompetitionResultDTO {
   eventId: string;
   rank?: number;
   medal?: "gold" | "silver" | "bronze"; // awarded based on rank
+  distance?: EventDistance;
+  gender?: Gender;
   finalTime?: string;
   splitTime500?: string;
   strokeRate?: number;

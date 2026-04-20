@@ -3,6 +3,7 @@ import {
   ICompetitionRepository,
   IRegistrationRepository,
   IResultRepository,
+  IEventRepository,
 } from "../../../domain/interfaces";
 import { MemberNotFoundError } from "../../../domain/errors";
 import {
@@ -17,6 +18,7 @@ export class GetMemberHistoryUseCase {
     private readonly registrationRepo: IRegistrationRepository,
     private readonly competitionRepo: ICompetitionRepository,
     private readonly resultRepo: IResultRepository,
+    private readonly eventRepo: IEventRepository,
   ) {}
 
   async execute(memberId: string): Promise<MemberHistoryDTO> {
@@ -49,26 +51,31 @@ export class GetMemberHistoryUseCase {
         (r) => r.memberId === memberId,
       );
 
-      const results: CompetitionResultDTO[] = memberResults.map((result) => {
-        const medal = this.getMedalByRank(result.rank);
-        if (medal === "gold") goldCount++;
-        if (medal === "silver") silverCount++;
-        if (medal === "bronze") bronzeCount++;
+      const results: CompetitionResultDTO[] = await Promise.all(
+        memberResults.map(async (result) => {
+          const medal = this.getMedalByRank(result.rank);
+          const event = await this.eventRepo.findById(result.eventId!);
 
-        return {
-          resultId: result.id!,
-          eventId: result.eventId,
-          rank: result.rank,
-          medal,
-          finalTime: result.finalTime,
-          splitTime500: result.splitTime500,
-          strokeRate: result.strokeRate,
-          heartRate: result.heartRate,
-          watts: result.watts,
-          notes: result.notes,
-        };
-      });
+          if (medal === "gold") goldCount++;
+          if (medal === "silver") silverCount++;
+          if (medal === "bronze") bronzeCount++;
 
+          return {
+            resultId: result.id!,
+            eventId: result.eventId,
+            rank: result.rank,
+            medal,
+            distance: event?.distance,
+            gender: event?.gender,
+            finalTime: result.finalTime,
+            splitTime500: result.splitTime500,
+            strokeRate: result.strokeRate,
+            heartRate: result.heartRate,
+            watts: result.watts,
+            notes: result.notes,
+          };
+        }),
+      );
       if (results.length > 0) {
         competitionHistory.push({
           competitionId: competition.id!,
