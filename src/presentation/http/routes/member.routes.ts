@@ -12,7 +12,7 @@ import {
   ICompetitionRepository,
   IRegistrationRepository,
   IResultRepository,
-  IEventRepository
+  IEventRepository,
 } from "../../../domain/interfaces";
 import {
   CreateMemberUseCase,
@@ -32,6 +32,10 @@ import {
   PositionType,
 } from "../../../domain/value-objects";
 import { validateObjectId } from "../../../shared/mongoose.utils";
+import path from "path";
+import fs from "fs";
+import { getConfig } from "../../../shared/config";
+import { SQLITE_PATH } from "../../../shared/constants";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -44,6 +48,10 @@ const upload = multer({
       cb(new Error("Only JPEG, PNG and WEBP images are allowed"));
     }
   },
+});
+
+const dbImportUpload = multer({
+  dest: path.dirname(SQLITE_PATH),
 });
 
 const createMemberSchema = z.object({
@@ -109,7 +117,7 @@ export function memberRouter(
   competitionRepo: ICompetitionRepository,
   registrationRepo: IRegistrationRepository,
   resultRepo: IResultRepository,
-  eventRepo: IEventRepository
+  eventRepo: IEventRepository,
 ): Router {
   const router = Router();
   const authenticate = createAuthenticate(authTokenSvc);
@@ -188,7 +196,7 @@ export function memberRouter(
           registrationRepo,
           competitionRepo,
           resultRepo,
-          eventRepo
+          eventRepo,
         );
         const result = await uc.execute(String(req.params["id"]));
         res.status(200).json(ApiResponseBuilder.success(result));
@@ -218,6 +226,51 @@ export function memberRouter(
           );
       } catch (err) {
         next(err);
+      }
+    },
+  );
+
+  router.get(
+    "/database/export",
+    // authenticate,
+    // requireRole("super_admin"),
+    async (req: Request, res: Response) => {
+      const absolutePath = path.resolve(SQLITE_PATH);
+      if (!fs.existsSync(absolutePath)) {
+        return res
+          .status(404)
+          .json(
+            ApiResponseBuilder.error("Fichier base de données introuvable"),
+          );
+      }
+      res.download(absolutePath, `backup-${new Date().getTime()}.sqlite`);
+    },
+  );
+
+  // POST /members/database/import
+  router.post(
+    "/database/import",
+    authenticate,
+    requireRole("super_admin"),
+    dbImportUpload.single("database"),
+    async (req: Request, res: Response) => {
+      try {
+        if (!req.file) throw new Error("Aucun fichier fourni");
+
+        const currentPath = path.resolve(SQLITE_PATH);
+        const uploadedPath = req.file.path;
+
+        // Atomic swap
+        fs.copyFileSync(uploadedPath, currentPath);
+        fs.unlinkSync(uploadedPath); // Clean up multer temp file
+
+        res
+          .status(200)
+          .json(ApiResponseBuilder.success(null, "Base de données importée"));
+      } catch (err) {
+        res
+          .status(500)
+          .json(ApiResponseBuilder.error("Échec de l'importation"));
       }
     },
   );

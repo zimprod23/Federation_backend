@@ -31,7 +31,7 @@ export class AdjustLicenseNumberUseCase {
     dto: AdjustLicenseNumberDTO,
   ): Promise<AdjustLicenseNumberResponseDTO> {
     const filters: Record<string, unknown> = {};
-    if (dto.clubId) filters.clubId = dto.clubId;
+    if (dto.clubId) filters.memberId = dto.clubId;
     if (dto.season) filters.season = dto.season;
 
     // Fetch all members with pagination

@@ -12,4 +12,7 @@ export const HTTP_STATUS = {
   INTERNAL_ERROR: 500,
 } as const;
 
+export const SQLITE_PATH =
+  "./src/infrastructure/database/sqlite/database.sqlite";
+
 export type HttpStatus = (typeof HTTP_STATUS)[keyof typeof HTTP_STATUS];
