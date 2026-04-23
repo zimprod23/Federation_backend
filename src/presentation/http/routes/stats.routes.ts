@@ -46,6 +46,7 @@ export function statsRouter(authTokenSvc: IAuthTokenService): Router {
                 category: {
                   $switch: {
                     branches: [
+                      { case: { $lt: ["$age", 15] }, then: "u15" },
                       { case: { $lt: ["$age", 18] }, then: "junior" },
                       { case: { $lt: ["$age", 23] }, then: "u23" },
                     ],
