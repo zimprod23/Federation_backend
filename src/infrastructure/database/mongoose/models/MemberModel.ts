@@ -9,6 +9,8 @@ export interface IMemberDocument extends Document {
   licenseNumber: string;
   firstName: string;
   lastName: string;
+  firstNameAr: string;
+  lastNameAr: string;
   dateOfBirth: Date;
   gender: Gender;
   email?: string;
@@ -37,6 +39,8 @@ const memberSchema = new Schema<IMemberDocument>(
     },
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
+    firstNameAr: { type: String, required: true, trim: true },
+    lastNameAr: { type: String, required: true, trim: true },
     dateOfBirth: { type: Date, required: true },
     gender: {
       type: String,

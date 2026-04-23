@@ -113,6 +113,8 @@ export class CreateMemberUseCase {
       licenseNumber,
       firstName: dto.firstName,
       lastName: dto.lastName,
+      firstNameAr: dto.firstNameAr,
+      lastNameAr: dto.lastNameAr,
       dateOfBirth: new Date(dto.dateOfBirth),
       gender: dto.gender,
       email: dto.email,

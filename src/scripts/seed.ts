@@ -2,21 +2,24 @@ import dotenv from "dotenv";
 import { initConfig, getConfig } from "../shared/config";
 import {
   connectDatabase,
+  DB,
   disconnectDatabase,
 } from "../infrastructure/database/connection";
 import { MongoUserRepository } from "../infrastructure/database/mongoose/repositories/MongoUserRepository";
+
 import { BcryptPasswordHasher } from "../infrastructure/security/BcryptPasswordHasher";
 import { User } from "../domain/entities/User";
 import { logger } from "../shared/logger";
+import { SqliteUserRepository } from "../infrastructure/database/sqlite/repositories/SqliteUserRepository";
 
 dotenv.config();
 async function seed(): Promise<void> {
   initConfig();
   const cfg = getConfig();
 
-  await connectDatabase(cfg.MONGO_URI);
+  await connectDatabase(cfg.SQLITE_PATH);
 
-  const userRepo = new MongoUserRepository();
+  const userRepo = new SqliteUserRepository(DB.conn);
   const passwordHasher = new BcryptPasswordHasher();
 
   const email = process.env["SEED_ADMIN_EMAIL"] ?? "admin@federation.ma";

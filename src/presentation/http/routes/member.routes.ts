@@ -9,14 +9,20 @@ import {
   IClubRepository,
   IMemberRepository,
   IStorageService,
+  ICompetitionRepository,
+  IRegistrationRepository,
+  IResultRepository,
+  IEventRepository,
 } from "../../../domain/interfaces";
 import {
   CreateMemberUseCase,
   GetMemberUseCase,
+  GetMemberHistoryUseCase,
   ListMembersUseCase,
   UpdateMemberUseCase,
   UploadMemberPhotoUseCase,
   DeleteMemberUseCase,
+  AdjustLicenseNumberUseCase,
 } from "../../../application/use-cases/member";
 import {
   Discipline,
@@ -26,6 +32,10 @@ import {
   PositionType,
 } from "../../../domain/value-objects";
 import { validateObjectId } from "../../../shared/mongoose.utils";
+import path from "path";
+import fs from "fs";
+import { getConfig } from "../../../shared/config";
+import { SQLITE_PATH } from "../../../shared/constants";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -40,9 +50,15 @@ const upload = multer({
   },
 });
 
+const dbImportUpload = multer({
+  dest: path.dirname(SQLITE_PATH),
+});
+
 const createMemberSchema = z.object({
   firstName: z.string().min(1).max(100).trim(),
   lastName: z.string().min(1).max(100).trim(),
+  firstNameAr: z.string().min(1).max(100).trim(),
+  lastNameAr: z.string().min(1).max(100).trim(),
   dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD format"),
   gender: z.enum(["male", "female"]),
   email: z.string().email().optional(),
@@ -59,6 +75,12 @@ const updateMemberSchema = z
   .object({
     firstName: z.string().min(1).max(100).trim().optional(),
     lastName: z.string().min(1).max(100).trim().optional(),
+    firstNameAr: z.string().min(1).max(100).trim().optional(),
+    lastNameAr: z.string().min(1).max(100).trim().optional(),
+    dateOfBirth: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD format")
+      .optional(),
     phone: z.string().optional(),
     height: z.number().min(100).max(250).optional(),
     armSpan: z.number().min(100).max(250).optional(),
@@ -81,11 +103,21 @@ const listMembersSchema = z.object({
   season: z.coerce.number().optional(),
   search: z.string().optional(),
 });
+
+const adjustLicenseNumberSchema = z.object({
+  clubId: z.string().optional(),
+  season: z.coerce.number().optional(),
+});
+
 export function memberRouter(
   memberRepo: IMemberRepository,
   clubRepo: IClubRepository,
   storageService: IStorageService,
   authTokenSvc: IAuthTokenService,
+  competitionRepo: ICompetitionRepository,
+  registrationRepo: IRegistrationRepository,
+  resultRepo: IResultRepository,
+  eventRepo: IEventRepository,
 ): Router {
   const router = Router();
   const authenticate = createAuthenticate(authTokenSvc);
@@ -147,6 +179,98 @@ export function memberRouter(
         res.status(200).json(ApiResponseBuilder.success(result));
       } catch (err) {
         next(err);
+      }
+    },
+  );
+
+  // GET /members/:id/history
+  router.get(
+    "/:id/history",
+    authenticate,
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        validateObjectId(String(req.params["id"]));
+
+        const uc = new GetMemberHistoryUseCase(
+          memberRepo,
+          registrationRepo,
+          competitionRepo,
+          resultRepo,
+          eventRepo,
+        );
+        const result = await uc.execute(String(req.params["id"]));
+        res.status(200).json(ApiResponseBuilder.success(result));
+      } catch (err) {
+        next(err);
+      }
+    },
+  );
+
+  // POST /members/adjust-license
+  router.post(
+    "/adjust-license",
+    authenticate,
+    requireRole("super_admin", "federation_admin"),
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const dto = validate(adjustLicenseNumberSchema, req.query);
+        const uc = new AdjustLicenseNumberUseCase(memberRepo, clubRepo);
+        const result = await uc.execute(dto);
+        res
+          .status(200)
+          .json(
+            ApiResponseBuilder.success(
+              result,
+              `License numbers adjusted for ${result.adjustedCount} members`,
+            ),
+          );
+      } catch (err) {
+        next(err);
+      }
+    },
+  );
+
+  router.get(
+    "/database/export",
+    // authenticate,
+    // requireRole("super_admin"),
+    async (req: Request, res: Response) => {
+      const absolutePath = path.resolve(SQLITE_PATH);
+      if (!fs.existsSync(absolutePath)) {
+        return res
+          .status(404)
+          .json(
+            ApiResponseBuilder.error("Fichier base de données introuvable"),
+          );
+      }
+      res.download(absolutePath, `backup-${new Date().getTime()}.sqlite`);
+    },
+  );
+
+  // POST /members/database/import
+  router.post(
+    "/database/import",
+    authenticate,
+    requireRole("super_admin"),
+    dbImportUpload.single("database"),
+    async (req: Request, res: Response) => {
+      try {
+        if (!req.file) throw new Error("Aucun fichier fourni");
+
+        const currentPath = path.resolve(SQLITE_PATH);
+        const uploadedPath = req.file.path;
+
+        // Atomic swap
+        fs.copyFileSync(uploadedPath, currentPath);
+        fs.unlinkSync(uploadedPath); // Clean up multer temp file
+
+        res
+          .status(200)
+          .json(ApiResponseBuilder.success(null, "Base de données importée"));
+      } catch (err) {
+        res
+          .status(500)
+          .json(ApiResponseBuilder.error("Échec de l'importation"));
       }
     },
   );

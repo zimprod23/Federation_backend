@@ -54,6 +54,14 @@ export class MongoRegistrationRepository implements IRegistrationRepository {
     return (docs as IRegistrationDocument[]).map((d) => this.toDomain(d));
   }
 
+  async findByMemberId(memberId: string): Promise<Registration[]> {
+    const filter: QueryFilter<IRegistrationDocument> = {
+      memberId: new Types.ObjectId(memberId) as Types.ObjectId,
+    };
+    const docs = await RegistrationModel.find(filter).lean();
+    return (docs as IRegistrationDocument[]).map((d) => this.toDomain(d));
+  }
+
   async findByMemberAndEvent(
     memberId: string,
     eventId: string,

@@ -36,8 +36,12 @@ export class UpdateMemberUseCase {
     const updated = new Member({
       ...member.toProps(),
       ...dto,
+      dateOfBirth: dto.dateOfBirth
+        ? new Date(dto.dateOfBirth)
+        : member.dateOfBirth,
       // licenseNumber: newLicense,
     });
+    console.log("Updated member props:", updated);
 
     const saved = await this.memberRepo.save(updated);
     return toMemberResponse(saved);
