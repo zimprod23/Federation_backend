@@ -124,7 +124,7 @@ export class CreateMemberUseCase {
       weight: dto.weight,
       position: dto.position,
       cin: dto.cin,
-      status: MemberStatus.PENDING,
+      status: MemberStatus.ACTIVE,
       clubId: dto.clubId,
       season,
     });

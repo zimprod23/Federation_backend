@@ -29,6 +29,7 @@ import {
   RecordResultUseCase,
   GetEventResultsUseCase,
 } from "../../../application/use-cases/competition";
+import { DeleteCompetitionUseCase } from "../../../application/use-cases/competition/DeleteCompetitionUseCase";
 
 // ─── Schemas ──────────────────────────────────────────────────────────────────
 const createCompetitionSchema = z.object({
@@ -73,6 +74,7 @@ const recordResultSchema = z.object({
   memberId: z.string().min(1),
   registrationId: z.string().min(1),
   rank: z.number().int().min(1).optional(),
+  status: z.nativeEnum(RegistrationStatus).optional(),
   finalTime: z.string().optional(),
   splitTime500: z.string().optional(),
   strokeRate: z.number().min(0).optional(),
@@ -149,6 +151,39 @@ export function competitionRouter(
         const uc = new GetCompetitionUseCase(competitionRepo, eventRepo);
         const result = await uc.execute(String(req.params["id"]));
         res.status(200).json(ApiResponseBuilder.success(result));
+      } catch (err) {
+        next(err);
+      }
+    },
+  );
+
+  // DELETE /competitions/:id
+  router.delete(
+    "/:id",
+    authenticate,
+    requireRole("super_admin", "federation_admin"),
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const { id } = req.params;
+        validateObjectId(String(id));
+
+        const uc = new DeleteCompetitionUseCase(
+          competitionRepo,
+          eventRepo,
+          registrationRepo,
+          resultRepo,
+        );
+
+        await uc.execute(String(id));
+
+        res
+          .status(200)
+          .json(
+            ApiResponseBuilder.success(
+              null,
+              "Competition and all associated data deleted",
+            ),
+          );
       } catch (err) {
         next(err);
       }

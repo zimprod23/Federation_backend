@@ -32,13 +32,36 @@ export class SqliteRegistrationRepository implements IRegistrationRepository {
     return row ? this.toDomain(row) : null;
   }
 
-  async findByEventId(eventId: string): Promise<Registration[]> {
+  // async findByEventId(eventId: string): Promise<Registration[]> {
+  //   const rows = this.db
+  //     .prepare("SELECT * FROM registrations WHERE event_id = ?")
+  //     .all(eventId) as any[];
+  //   return rows.map((r) => this.toDomain(r));
+  // }
+  async findByEventId(eventId: string): Promise<any[]> {
     const rows = this.db
-      .prepare("SELECT * FROM registrations WHERE event_id = ?")
+      .prepare(
+        `
+      SELECT
+        r.*,
+        m.first_name || ' ' || m.last_name as memberFullName,
+        m.license_number as memberLicenseNumber
+      FROM registrations r
+      JOIN members m ON r.member_id = m.id
+      WHERE r.event_id = ?
+    `,
+      )
       .all(eventId) as any[];
-    return rows.map((r) => this.toDomain(r));
-  }
 
+    // Note: If you want to keep using this.toDomain(r),
+    // you must ensure your Registration entity/class can hold these new fields.
+    // Otherwise, return the raw objects or a DTO.
+    return rows.map((r) => ({
+      ...this.toDomain(r),
+      memberFullName: r.memberFullName,
+      memberLicenseNumber: r.memberLicenseNumber,
+    }));
+  }
   async findByMemberId(memberId: string): Promise<Registration[]> {
     const rows = this.db
       .prepare("SELECT * FROM registrations WHERE member_id = ?")
