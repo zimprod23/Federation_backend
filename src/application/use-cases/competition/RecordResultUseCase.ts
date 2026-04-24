@@ -51,7 +51,7 @@ export class RecordResultUseCase {
     }
 
     const updated = registration.withStatus(status);
-    await this.registrationRepo.save(registration);
+    await this.registrationRepo.save(updated);
 
     const AlreadyExist = await this.resultRepo.findByMemberAndEvent(
       dto.memberId,

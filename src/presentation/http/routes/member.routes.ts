@@ -34,7 +34,7 @@ import {
 import { validateObjectId } from "../../../shared/mongoose.utils";
 import path from "path";
 import fs from "fs";
-import { getConfig } from "../../../shared/config";
+import archiver from "archiver";
 import { SQLITE_PATH } from "../../../shared/constants";
 
 const upload = multer({
@@ -244,6 +244,49 @@ export function memberRouter(
           );
       }
       res.download(absolutePath, `backup-${new Date().getTime()}.sqlite`);
+    },
+  );
+
+  router.get(
+    "/database/export-uploads",
+    authenticate,
+    requireRole("super_admin"),
+    async (req: Request, res: Response) => {
+      try {
+        const uploadsPath = path.resolve("./uploads");
+
+        if (!fs.existsSync(uploadsPath)) {
+          return res
+            .status(404)
+            .json(ApiResponseBuilder.error("Uploads folder not found"));
+        }
+
+        res.setHeader("Content-Type", "application/zip");
+        res.setHeader(
+          "Content-Disposition",
+          `attachment; filename=uploads-backup-${Date.now()}.zip`,
+        );
+
+        const archive = archiver("zip", {
+          zlib: { level: 9 },
+        });
+
+        archive.on("error", (err) => {
+          throw err;
+        });
+
+        archive.pipe(res);
+
+        // Add entire uploads folder
+        archive.directory(uploadsPath, false);
+
+        await archive.finalize();
+      } catch (err) {
+        console.error(err);
+        res
+          .status(500)
+          .json(ApiResponseBuilder.error("Failed to export uploads"));
+      }
     },
   );
 
