@@ -12,6 +12,7 @@ import {
 } from "../../../domain/errors";
 import { RecordResultDTO, ResultResponseDTO } from "../../dtos";
 import { toResultResponse } from "./toResultResponse";
+import { RegistrationStatus } from "../../../domain/entities/Registration";
 
 export class RecordResultUseCase {
   constructor(
@@ -36,6 +37,41 @@ export class RecordResultUseCase {
       dto.registrationId,
     );
     if (!registration) throw new RegistrationNotFoundError(dto.registrationId);
+
+    let status = dto.status;
+
+    if (!status) {
+      if (dto.rank && dto.rank > 0) {
+        status = RegistrationStatus.FINISHED;
+      } else if (!dto.finalTime) {
+        status = RegistrationStatus.DNS;
+      } else {
+        status = RegistrationStatus.REGISTERED;
+      }
+    }
+
+    const updated = registration.withStatus(status);
+    await this.registrationRepo.save(registration);
+
+    const AlreadyExist = await this.resultRepo.findByMemberAndEvent(
+      dto.memberId,
+      dto.eventId,
+    );
+    if (AlreadyExist) {
+      const updated = new Result({
+        ...AlreadyExist.toProps(),
+        rank: dto.rank,
+        finalTime: dto.finalTime,
+        splitTime500: dto.splitTime500,
+        strokeRate: dto.strokeRate,
+        heartRate: dto.heartRate,
+        watts: dto.watts,
+        notes: dto.notes,
+        recordedBy,
+      });
+      const saved = await this.resultRepo.save(updated);
+      return toResultResponse(saved);
+    }
 
     const result = new Result({
       competitionId: dto.competitionId,

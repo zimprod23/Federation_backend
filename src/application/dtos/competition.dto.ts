@@ -99,6 +99,7 @@ export interface RecordResultDTO {
   memberId: string;
   registrationId: string;
   rank?: number;
+  status?: RegistrationStatus;
   finalTime?: string;
   splitTime500?: string;
   strokeRate?: number;
