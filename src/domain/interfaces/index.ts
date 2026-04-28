@@ -58,6 +58,7 @@ export interface IClubRepository {
   findByCode(code: string): Promise<Club | null>;
   findAll(pagination: PaginationParams): Promise<PaginatedResult<Club>>;
   save(club: Club): Promise<Club>;
+  delete(id: string): Promise<void>;
 }
 
 // ─── IUserRepository ─────────────────────────────────────────────────────────

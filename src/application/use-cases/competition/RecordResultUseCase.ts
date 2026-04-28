@@ -36,6 +36,8 @@ export class RecordResultUseCase {
     const registration = await this.registrationRepo.findById(
       dto.registrationId,
     );
+
+    console.log("DTOS:", dto);
     if (!registration) throw new RegistrationNotFoundError(dto.registrationId);
 
     let status = dto.status;

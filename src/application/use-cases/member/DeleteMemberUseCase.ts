@@ -10,7 +10,10 @@ export class DeleteMemberUseCase {
     if (!member) throw new MemberNotFoundError(id);
 
     // Soft delete — suspended, never hard deleted (unless its already suspended)
-    if (member.status == MemberStatus.SUSPENDED) this.memberRepo.delete(id);
+    if (member.status == MemberStatus.SUSPENDED) {
+      await this.memberRepo.delete(id);
+      return;
+    }
     const suspended = member.withStatus(MemberStatus.SUSPENDED);
     await this.memberRepo.save(suspended);
   }

@@ -11,6 +11,10 @@ import { IClubRow } from "../models/types";
 
 export class SqliteClubRepository implements IClubRepository {
   constructor(private readonly db: Database) {}
+  delete(id: string): Promise<void> {
+    this.db.prepare("DELETE FROM clubs WHERE id = ?").run(id);
+    return Promise.resolve();
+  }
 
   private toDomain(row: IClubRow): Club {
     return new Club({

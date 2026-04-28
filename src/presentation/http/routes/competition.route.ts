@@ -341,6 +341,7 @@ export function competitionRouter(
             memberId: dto.memberId,
             registrationId: dto.registrationId,
             rank: dto.rank,
+            status: dto.status,
             finalTime: dto.finalTime,
             splitTime500: dto.splitTime500,
             strokeRate: dto.strokeRate,

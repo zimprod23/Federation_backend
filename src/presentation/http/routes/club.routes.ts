@@ -12,6 +12,7 @@ import {
 } from "../../../application/use-cases/club";
 import { ClubStatus, Discipline } from "../../../domain/value-objects";
 import { validateObjectId } from "../../../shared/mongoose.utils";
+import { DeleteClubUseCase } from "../../../application/use-cases/club/DeleteClubUseCase";
 
 const createClubSchema = z.object({
   name: z.string().min(1).max(200).trim(),
@@ -100,7 +101,21 @@ export function clubRouter(
       }
     },
   );
-
+  router.delete(
+    "/:id",
+    authenticate,
+    requireRole("super_admin", "federation_admin"),
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        validateObjectId(String(req.params["id"]));
+        const uc = new DeleteClubUseCase(clubRepo);
+        await uc.execute(String(req.params["id"]));
+        res.status(204).send();
+      } catch (err) {
+        next(err);
+      }
+    },
+  );
   // PATCH /clubs/:id/status
   router.patch(
     "/:id/status",

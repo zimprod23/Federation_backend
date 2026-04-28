@@ -105,36 +105,57 @@ export class SqliteMemberRepository implements IMemberRepository {
     }
 
     if (filters.category) {
+      let minDate: Date = new Date(1900, 0, 1);
+      let maxDate: Date = new Date(2100, 11, 31);
       const currentYear = new Date().getFullYear();
       let minYear: number, maxYear: number;
 
+      const now = new Date();
+
       switch (filters.category.toLowerCase()) {
-        case "u15":
-          minYear = currentYear - 14;
-          maxYear = currentYear;
-          break;
-        case "u19":
-          minYear = currentYear - 18;
-          maxYear = currentYear - 15;
-          break;
-        case "junior":
-          minYear = currentYear - 20;
-          maxYear = currentYear - 19;
-          break;
         case "u23":
-          minYear = currentYear - 22;
-          maxYear = currentYear - 21;
+          // born after (today - 23 years)
+          minDate = new Date(
+            now.getFullYear() - 23,
+            now.getMonth(),
+            now.getDate(),
+          );
+          maxDate = now;
           break;
+
+        case "u19":
+          minDate = new Date(
+            now.getFullYear() - 19,
+            now.getMonth(),
+            now.getDate(),
+          );
+          maxDate = new Date(
+            now.getFullYear() - 15,
+            now.getMonth(),
+            now.getDate(),
+          );
+          break;
+
+        case "u15":
+          minDate = new Date(
+            now.getFullYear() - 15,
+            now.getMonth(),
+            now.getDate(),
+          );
+          maxDate = now;
+          break;
+
         case "senior":
-          minYear = 1900;
-          maxYear = currentYear - 23;
+          minDate = new Date(1900, 0, 1);
+          maxDate = new Date(
+            now.getFullYear() - 23,
+            now.getMonth(),
+            now.getDate(),
+          );
           break;
-        default:
-          minYear = 1900;
-          maxYear = 2100;
       }
       whereClauses.push("date_of_birth BETWEEN ? AND ?");
-      params.push(`${minYear}-01-01`, `${maxYear}-12-31`);
+      params.push(minDate.toISOString(), maxDate.toISOString());
     }
 
     const whereSql = whereClauses.join(" AND ");
