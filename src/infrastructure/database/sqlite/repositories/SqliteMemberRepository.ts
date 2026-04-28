@@ -105,55 +105,42 @@ export class SqliteMemberRepository implements IMemberRepository {
     }
 
     if (filters.category) {
-      let minDate: Date = new Date(1900, 0, 1);
-      let maxDate: Date = new Date(2100, 11, 31);
       const currentYear = new Date().getFullYear();
-      let minYear: number, maxYear: number;
 
-      const now = new Date();
+      let minDate: Date;
+      let maxDate: Date;
 
       switch (filters.category.toLowerCase()) {
         case "u23":
-          // born after (today - 23 years)
-          minDate = new Date(
-            now.getFullYear() - 23,
-            now.getMonth(),
-            now.getDate(),
-          );
-          maxDate = now;
+          // Age 18 → 22
+          minDate = new Date(currentYear - 22, 0, 1); // youngest
+          maxDate = new Date(currentYear - 18, 11, 31); // oldest
           break;
 
         case "u19":
-          minDate = new Date(
-            now.getFullYear() - 19,
-            now.getMonth(),
-            now.getDate(),
-          );
-          maxDate = new Date(
-            now.getFullYear() - 15,
-            now.getMonth(),
-            now.getDate(),
-          );
+          // Age 15 → 18
+          minDate = new Date(currentYear - 18, 0, 1);
+          maxDate = new Date(currentYear - 15, 11, 31);
           break;
 
         case "u15":
-          minDate = new Date(
-            now.getFullYear() - 15,
-            now.getMonth(),
-            now.getDate(),
-          );
-          maxDate = now;
+          // Age 12 → 14 (adjust if needed)
+          minDate = new Date(currentYear - 14, 0, 1);
+          maxDate = new Date(currentYear - 12, 11, 31);
           break;
 
         case "senior":
+          // Age 23+
           minDate = new Date(1900, 0, 1);
-          maxDate = new Date(
-            now.getFullYear() - 23,
-            now.getMonth(),
-            now.getDate(),
-          );
+          maxDate = new Date(currentYear - 23, 11, 31);
           break;
+
+        default:
+          // fallback: no filtering
+          minDate = new Date(1900, 0, 1);
+          maxDate = new Date(2100, 11, 31);
       }
+
       whereClauses.push("date_of_birth BETWEEN ? AND ?");
       params.push(minDate.toISOString(), maxDate.toISOString());
     }
